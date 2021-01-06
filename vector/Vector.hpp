@@ -6,7 +6,7 @@
 /*   By: Jeanxavier <Jeanxavier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 12:05:06 by jereligi          #+#    #+#             */
-/*   Updated: 2021/01/05 16:26:58 by Jeanxavier       ###   ########.fr       */
+/*   Updated: 2021/01/06 16:47:15 by Jeanxavier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #define VECTOR_HPP
 
 #include <memory>
+#include <stdexcept>
 
 namespace ft
 {
@@ -25,14 +26,14 @@ namespace ft
 		typedef Allocator									allocator_type;
 		typedef typename allocator_type::reference			reference;
 		typedef typename allocator_type::const_reference	const_reference;
-		typedef implementation-defined						iterator;
-		typedef implementation-defined						const_iterator;
+		// typedef implementation-defined						iterator;
+		// typedef implementation-defined						const_iterator;
 		typedef typename allocator_type::size_type			size_type;
 		typedef typename allocator_type::difference_type	difference_type;
 		typedef typename allocator_type::pointer			pointer;
 		typedef typename allocator_type::const_pointer		const_pointer;
-		typedef std::reverse_iterator<iterator>				reverse_iterator;
-		typedef std::reverse_iterator<const_iterator>		const_reverse_iterator;
+		// typedef std::reverse_iterator<iterator>				reverse_iterator;
+		// typedef std::reverse_iterator<const_iterator>		const_reverse_iterator;
 
 		/*******************************************
 		*****  Member Functions (Coplien Form) *****
@@ -54,25 +55,28 @@ namespace ft
 			_size = 0;
 			_capacity = 0;
 			_alloc = alloc;
-
+			assign(n, val);
 		}
 		
 		// range
-		template <class InputIterator>
-		vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type())
-		{
-			_array = NULL;
-			_size = 0;
-			_capacity = 0;
-			_alloc = alloc;
-		}
+		// template <class InputIterator>
+		// vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type())
+		// {
+		// 	_array = NULL;
+		// 	_size = 0;
+		// 	_capacity = 0;
+		// 	_alloc = alloc;
+		// 	//assign
+		// }
 
 		// copy
-		vector (const vector& x);
+		// vector (const vector& x);
 
-		~vector();
+		~vector() {
+			clear();
+		}
 
-		vector& operator= (const vector& x);
+		// vector& operator= (const vector& x);
 
 		/*******************************************
 		*****             Iterators            *****
@@ -94,43 +98,113 @@ namespace ft
 		*****            Capacity              *****
 		*******************************************/
 
-		// size_type size() const;
+		size_type size() const {
+			return (_size);
+		}
 
 		// size_type max_size() const;
 
 		// void resize (size_type n, value_type val = value_type());
 
-		// size_type capacity() const;
+		size_type capacity() const {
+			return (_capacity);
+		}
 
-		// bool empty() const;
+		bool empty() const
+		{
+			if (_size > 0)
+				return (1);
+			return (0);
+		}
 		
-		// void reserve (size_type n);
+		void reserve (size_type n)
+		{
+			if (n > _capacity)
+			{
+				T	*tmp;
+				tmp = _alloc.allocate(n);
+				if (_capacity > 0)
+				{
+					for (size_type i = 0; i < _size; i++)
+					{
+						_alloc.construct(&tmp[i], _array[i]);
+						_alloc.destroy(&_array[i]);
+					}
+					_alloc.deallocate(_array, _capacity);
+				}
+				_array = tmp;
+				_capacity = n;
+			}
+		}
 
 		/*******************************************
 		*****         Element access           *****
 		*******************************************/
 
-		// reference operator[] (size_type n);
-		// const_reference operator[] (size_type n) const;
+		reference operator[] (size_type n) {
+			return (_array[n]);
+		}
+
+		const_reference operator[] (size_type n) const {
+			return (_array[n]);
+		}
 		
-		// reference at (size_type n);
-		// const_reference at (size_type n) const;
+		reference at (size_type n)
+		{
+			if (n >= _size)
+				throw std::out_of_range("Out of Range error");
+			return (_array[n]);
+		}
 
-		// reference front();
-		// const_reference front() const;
+		const_reference at (size_type n) const
+		{
+			if (n >= _size)
+				throw std::out_of_range("Out of Range error");
+			return (_array[n]);
+		}
 
-		//reference back();
-		//const_reference back() const;
+		reference front() {
+			return (_array[0]);
+		}
+
+		const_reference front() const {
+			return (_array[0]);
+		}
+
+		reference back() {
+			return (_array[_size - 1]);
+		}
+		const_reference back() const {
+			return (_array[_size - 1]);
+		}
 
 		/*******************************************
 		*****            Modifiers             *****
 		*******************************************/
 
-		template <class InputIterator>
-  		void assign (InputIterator first, InputIterator last);
-		void assign (size_type n, const value_type& val);
+		// template <class InputIterator>
+  		// void assign (InputIterator first, InputIterator last);
 
-		// void push_back (const value_type& val);
+		void assign (size_type n, const value_type& val)
+		{
+			if (empty())
+				clear();
+			for (size_type i = 0; i < n; i++)
+				push_back(val);
+		}
+
+		void push_back (const value_type& val)
+		{
+			if (_size + 1 >= _capacity)
+			{
+				if (_size == 0)
+					reserve(1);
+				else
+					reserve(_capacity * 2);
+			}
+			_array[_size] = val;
+			_size++;
+		}
 
 		// void pop_back();
 
@@ -146,7 +220,18 @@ namespace ft
 
 		// void swap (vector& x);
 
-		// void clear();
+		void clear()
+		{
+			if (_size > 0)
+			{
+				for (size_type i = 0; i <= _size; i++)
+					_alloc.destroy(&_array[i]);
+				_alloc.deallocate(_array, _capacity);
+				// _array = NULL;
+				_size = 0;
+				_capacity = 0;
+			}
+		}
 
 	private:
 		T				*_array;
