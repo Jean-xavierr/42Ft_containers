@@ -6,7 +6,7 @@
 /*   By: Jeanxavier <Jeanxavier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 12:05:06 by jereligi          #+#    #+#             */
-/*   Updated: 2021/01/06 16:47:15 by Jeanxavier       ###   ########.fr       */
+/*   Updated: 2021/01/07 11:59:41 by Jeanxavier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include <memory>
 #include <stdexcept>
+#include <iterator>
 
 namespace ft
 {
@@ -82,8 +83,12 @@ namespace ft
 		*****             Iterators            *****
 		*******************************************/
 
-		// iterator begin();
-		// const_iterator begin() const;
+		// iterator begin() {
+		// 	return (_array[0]);
+		// }
+		// const_iterator begin() const {
+		// 	return (_array[0]);
+		// }
 
 		// iterator end();
 		// const_iterator end() const;
@@ -102,9 +107,24 @@ namespace ft
 			return (_size);
 		}
 
-		// size_type max_size() const;
+		size_type max_size() const {
+			return (_alloc.max_size());
+		}
 
-		// void resize (size_type n, value_type val = value_type());
+		void resize (size_type n, value_type val = value_type())
+		{
+			if (n < _size)
+			{
+				for (size_type i = n + 1; i < _size; i++)
+					_alloc.destroy(&_array[i]);
+			}
+			else if (n > _size)
+			{
+				for (size_type i = _size; i < n; i++)
+					push_back(val);
+			}
+			_size = n;
+		}
 
 		size_type capacity() const {
 			return (_capacity);
@@ -206,7 +226,11 @@ namespace ft
 			_size++;
 		}
 
-		// void pop_back();
+		void pop_back() 
+		{
+			_alloc.destroy(&_array[_size]);
+			_size -= 1;
+		}
 
 		//iterator insert (iterator position, const value_type& val);
 
