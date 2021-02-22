@@ -6,7 +6,7 @@
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 11:46:10 by jereligi          #+#    #+#             */
-/*   Updated: 2021/01/04 17:02:45 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/02/22 12:38:57 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,37 @@ namespace ft
 	{
 	public:
 
-		/*Code Here*/;
+		/*******************************************
+		*****             Iterators            *****
+		*******************************************/
+
+		/*******************************************
+		*****            Capacity              *****
+		*******************************************/
+
+		bool empty() const;
+		size_type size() const;
+		size_type max_size() const;
+
+		/*******************************************
+		*****         Element access           *****
+		*******************************************/
+
+		reference front();
+		const_reference front() const;
+		reference back();
+		const_reference back() const;
+
+		/*******************************************
+		*****            Modifiers             *****
+		*******************************************/
+
+		template <class InputIterator>
+		void assign (InputIterator first, InputIterator last);
+		void assign (size_type n, const value_type& val);
+
+
+
 
 	private:
 
