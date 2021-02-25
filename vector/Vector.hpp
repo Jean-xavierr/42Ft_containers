@@ -6,7 +6,7 @@
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 12:05:06 by jereligi          #+#    #+#             */
-/*   Updated: 2021/02/25 13:33:23 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/02/25 14:54:31 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ namespace ft
 		// }
 
 		iterator end() {
-			return (iterator(_array + _size));
+			return (iterator(_array + (_size - 1)));
 		}
 		// const_iterator end() const;
 
@@ -206,7 +206,16 @@ namespace ft
 		*******************************************/
 
 		// template <class InputIterator>
-  		// void assign (InputIterator first, InputIterator last);
+  		// void assign (InputIterator first, InputIterator last)
+		// {
+		// 	if (empty())
+		// 		clear();
+		// 	while (first < last)
+		// 	{
+		// 		push_back(*first);
+		// 		first++;
+		// 	}
+		// }
 
 		void assign (size_type n, const value_type& val)
 		{
@@ -235,7 +244,10 @@ namespace ft
 			_size -= 1;
 		}
 
-		//iterator insert (iterator position, const value_type& val);
+		// iterator insert (iterator position, const value_type& val)
+		// {
+				
+		// }
 
     	//void insert (iterator position, size_type n, const value_type& val);
 
