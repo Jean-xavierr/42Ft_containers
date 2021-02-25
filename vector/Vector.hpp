@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Jeanxavier <Jeanxavier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 12:05:06 by jereligi          #+#    #+#             */
-/*   Updated: 2021/01/07 11:59:41 by Jeanxavier       ###   ########.fr       */
+/*   Updated: 2021/02/25 13:33:23 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include <memory>
 #include <stdexcept>
-#include <iterator>
+#include "Iterator.hpp"
 
 namespace ft
 {
@@ -28,6 +28,7 @@ namespace ft
 		typedef typename allocator_type::reference			reference;
 		typedef typename allocator_type::const_reference	const_reference;
 		// typedef implementation-defined						iterator;
+		typedef typename ft::Iterator<T>						iterator;   
 		// typedef implementation-defined						const_iterator;
 		typedef typename allocator_type::size_type			size_type;
 		typedef typename allocator_type::difference_type	difference_type;
@@ -83,14 +84,16 @@ namespace ft
 		*****             Iterators            *****
 		*******************************************/
 
-		// iterator begin() {
-		// 	return (_array[0]);
-		// }
+		iterator begin() {
+			return (iterator(_array));
+		}
 		// const_iterator begin() const {
 		// 	return (_array[0]);
 		// }
 
-		// iterator end();
+		iterator end() {
+			return (iterator(_array + _size));
+		}
 		// const_iterator end() const;
 
 		// reverse_iterator rbegin();
