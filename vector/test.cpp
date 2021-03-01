@@ -1,38 +1,55 @@
 
 #include <iostream>
 #include <vector>
-#include "Vector.hpp"
-#include "Iterator.hpp"
+#include "vector.hpp"
+#include "iterator.hpp"
 
 
 int		main(void)
 {
-	// std::vector<int>	vec(4,5);
-	// std::vector<int>::iterator it;
 
-	// it = begin(vec);
-	// std::cout << *it << std::endl;
+	// STD::VECTOR
+	//
 
-	// vec.insert(it + 1, 12);
-	// for (it = begin(vec); it < end(vec); it++)
-	// 	std::cout << *it << std::endl;
+	std::vector<int>	vec(2,3);
+	std::vector<int>	vec2(1,42);
+	vec.push_back(5);
+	vec.push_back(6);
+	vec.push_back(7);
 
-	// std::cout << std::endl;
-	// vec.assign(3, 2);
-	// for (it = begin(vec); it < end(vec); it++)
-	// 	std::cout << *it << std::endl;
+	vec2.push_back(43);
+	vec2.push_back(44);
+	std::vector<int>::iterator i = begin(vec);
+	std::vector<int>::iterator it = begin(vec2);
+	std::vector<int>::iterator ite = end(vec2);
+	vec.insert(i + 3, it, ite);
 
-	ft::vector<int>	vec1(4,3);
-	ft::vector<int>::iterator ite = begin(vec1);
+
+	for (it = begin(vec); it < end(vec); it++)
+		std::cout << *it << std::endl;
+	// std::cout << *ite << std::endl;
+
+	std::cout << std::endl << std::endl;
+
+	// FT::VECTOR
+	//
+
+	ft::vector<int>	vec1(2,3);
+	ft::vector<int>	vec3(1,42);
+
 	vec1.push_back(5);
-	ft::vector<int>::iterator iten = end(vec1);
-	std::cout << *ite << std::endl;
-	std::cout << *iten << std::endl;
+	vec1.push_back(6);
+	vec1.push_back(7);
 
-	std::cout << "Test" << std::endl;
-	for (ite = begin(vec1); ite <= end(vec1); ite++)
-		std::cout << *ite << std::endl;
-	int nb = *ite != *iten;
-	std::cout << nb << std::endl;
+	vec3.push_back(43);
+	vec3.push_back(44);
+	ft::vector<int>::iterator ix = begin(vec1);
+	ft::vector<int>::iterator itx = begin(vec3);
+	ft::vector<int>::iterator iten = end(vec3);
+
+	vec1.insert(ix + 3, itx, iten);
+	for (itx = begin(vec1); itx < end(vec1); itx++)
+		std::cout << *itx << std::endl;
+
 	return 0;
 }

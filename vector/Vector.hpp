@@ -6,7 +6,7 @@
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 12:05:06 by jereligi          #+#    #+#             */
-/*   Updated: 2021/03/01 12:03:52 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/03/01 16:02:12 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include <memory>
 #include <stdexcept>
-#include "Iterator.hpp"
+#include "iterator.hpp"
 #include "../utils.hpp"
 
 namespace ft
@@ -224,18 +224,18 @@ namespace ft
 		*****            Modifiers             *****
 		*******************************************/
 
-		// template <class InputIterator>
-  		// void assign (InputIterator first, InputIterator last,
-		//	typename ft::enable_if<InputIterator::is_iterator, InputIterator>::type = NULL))
-		// {
-		// 	if (empty())
-		// 		clear();
-		// 	while (first < last)
-		// 	{
-		// 		push_back(*first);
-		// 		first++;
-		// 	}
-		// }
+		template <class InputIterator>
+  		void assign (InputIterator first, InputIterator last,
+		typename ft::enable_if<InputIterator::is_iterator, InputIterator>::type = NULL)
+		{
+			if (empty())
+				clear();
+			while (first < last)
+			{
+				push_back(*first);
+				first++;
+			}
+		}
 
 		void assign (size_type n, const value_type& val)
 		{
@@ -264,21 +264,97 @@ namespace ft
 			_size -= 1;
 		}
 
-		// iterator insert (iterator position, const value_type& val)
-		// {
-				
-		// }
+		iterator insert(iterator position, const value_type& val)
+		{
+			if (_size > + 1 >= _capacity)
+			{
+				if (_size == 0)
+					reserve(1);
+				else
+					reserve(_capacity * 2);
+			}
+			ft::vector<T>	tmp(position, end());
+			for (size_type i = 0; i < tmp.size(); i++)
+				pop_back();
+			push_back(val);
+			iterator it = tmp.begin();
+			for (size_type i = 0; i < tmp.size(); i++, it++)
+				push_back(*it);
+			return (position);
+		}
 
-    	//void insert (iterator position, size_type n, const value_type& val);
+    	void insert (iterator position, size_type n, const value_type& val)
+		{
+			if (_size > + 1 >= _capacity)
+			{
+				if (_size == 0)
+					reserve(1);
+				else
+					reserve(_capacity * 2);
+			}
+			ft::vector<T>	tmp(position, end());
+			for (size_type i = 0; i < tmp.size(); i++)
+				pop_back();
+			for (size_type i = 0; i < n; i++)
+				push_back(val);
+			iterator it = tmp.begin();
+			for (size_type i = 0; i < tmp.size(); i++, it++)
+				push_back(*it);
+		}
 
-		// template <class InputIterator>
-		// void insert (iterator position, InputIterator first, InputIterator last,
-		// typename ft::enable_if<InputIterator::is_iterator, InputIterator>::type = NULL));
+		template <class InputIterator>
+		void insert(iterator position, InputIterator first, InputIterator last,
+		typename ft::enable_if<InputIterator::is_iterator, InputIterator>::type = NULL)
+		{
+			if (_size > + 1 >= _capacity)
+			{
+				if (_size == 0)
+					reserve(1);
+				else
+					reserve(_capacity * 2);
+			}
+			ft::vector<T>	tmp(position, end());
+			for (size_type i = 0; i < tmp.size(); i++)
+				pop_back();
+			while (first != last)
+			{
+				push_back(*first);
+				first++;
+			}
+			iterator it = tmp.begin();
+			for (size_type i = 0; i < tmp.size(); i++, it++)
+				push_back(*it);
+		}
 
-		// iterator erase (iterator position);
-		// iterator erase (iterator first, iterator last);
+		iterator erase (iterator position)
+		{
+			ft::vector<T>	tmp(position + 1, end());
 
-		// void swap (vector& x);
+			for (size_type i = 0; i < tmp._size; i++)
+				pop_back();
+			pop_back();
+			for (iterator it = tmp.begin(); it != tmp.end(); it++)
+				push_back(*it);
+			return (position);
+		}
+		
+		iterator erase (iterator first, iterator last)
+		{
+			iterator	tmp = first;
+			while (tmp != last)
+			{
+				erase(first);
+				tmp++;
+			}
+			return (first);
+		}
+
+		void swap(vector& src)
+		{
+			std::swap(_array, src._array);
+			std::swap(_size, src._size);
+			std::swap(_capacity, src._capacity);
+		}
 
 		void clear()
 		{
