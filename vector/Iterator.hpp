@@ -6,7 +6,7 @@
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/25 11:06:31 by jereligi          #+#    #+#             */
-/*   Updated: 2021/02/25 13:48:15 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/03/01 11:06:54 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ namespace ft
 	class	Iterator
 	{
 	public:
+		static const bool				is_iterator = true;
 		typedef typename std::ptrdiff_t difference_type;
 
 		/*******************************************
@@ -127,7 +128,7 @@ namespace ft
 
 	private:
 		T*	_ptr;
-
+		
 	};
 }
 

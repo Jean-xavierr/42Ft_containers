@@ -6,7 +6,7 @@
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 12:05:06 by jereligi          #+#    #+#             */
-/*   Updated: 2021/02/25 14:54:31 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/03/01 12:03:52 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <memory>
 #include <stdexcept>
 #include "Iterator.hpp"
+#include "../utils.hpp"
 
 namespace ft
 {
@@ -27,15 +28,15 @@ namespace ft
 		typedef Allocator									allocator_type;
 		typedef typename allocator_type::reference			reference;
 		typedef typename allocator_type::const_reference	const_reference;
-		// typedef implementation-defined						iterator;
-		typedef typename ft::Iterator<T>						iterator;   
-		// typedef implementation-defined						const_iterator;
+		// typedef implementation-defined					iterator;
+		// typedef implementation-defined					const_iterator;
+		typedef typename ft::Iterator<T>					iterator;
 		typedef typename allocator_type::size_type			size_type;
 		typedef typename allocator_type::difference_type	difference_type;
 		typedef typename allocator_type::pointer			pointer;
 		typedef typename allocator_type::const_pointer		const_pointer;
-		// typedef std::reverse_iterator<iterator>				reverse_iterator;
-		// typedef std::reverse_iterator<const_iterator>		const_reverse_iterator;
+		// typedef std::reverse_iterator<iterator>			reverse_iterator;
+		// typedef std::reverse_iterator<const_iterator>	const_reverse_iterator;
 
 		/*******************************************
 		*****  Member Functions (Coplien Form) *****
@@ -61,24 +62,42 @@ namespace ft
 		}
 		
 		// range
-		// template <class InputIterator>
-		// vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type())
-		// {
-		// 	_array = NULL;
-		// 	_size = 0;
-		// 	_capacity = 0;
-		// 	_alloc = alloc;
-		// 	//assign
-		// }
+		template <class InputIterator>
+		vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(),
+		typename ft::enable_if<InputIterator::is_iterator, InputIterator>::type = NULL)
+		{
+			_array = NULL;
+			_size = 0;
+			_capacity = 0;
+			_alloc = alloc;
+			while (first != last)
+			{
+				push_back(*first);
+				first++;
+			}
+		}
 
 		// copy
-		// vector (const vector& x);
+		vector (vector& src)
+		{
+			_array = NULL;
+			_size = 0;
+			_capacity = 0;
+			_alloc = allocator_type();
+			*this = src;
+		}
 
 		~vector() {
 			clear();
 		}
 
-		// vector& operator= (const vector& x);
+		vector& operator=(vector& src)
+		{
+			clear();
+			for (iterator it = src.begin(); it != src.end(); it++)
+				push_back(*it);
+			return (*this);
+		}
 
 		/*******************************************
 		*****             Iterators            *****
@@ -92,7 +111,7 @@ namespace ft
 		// }
 
 		iterator end() {
-			return (iterator(_array + (_size - 1)));
+			return (iterator(_array + _size));
 		}
 		// const_iterator end() const;
 
@@ -164,22 +183,22 @@ namespace ft
 		*****         Element access           *****
 		*******************************************/
 
-		reference operator[] (size_type n) {
+		reference operator[](size_type n) {
 			return (_array[n]);
 		}
 
-		const_reference operator[] (size_type n) const {
+		const_reference operator[](size_type n) const {
 			return (_array[n]);
 		}
 		
-		reference at (size_type n)
+		reference at(size_type n)
 		{
 			if (n >= _size)
 				throw std::out_of_range("Out of Range error");
 			return (_array[n]);
 		}
 
-		const_reference at (size_type n) const
+		const_reference at(size_type n) const
 		{
 			if (n >= _size)
 				throw std::out_of_range("Out of Range error");
@@ -206,7 +225,8 @@ namespace ft
 		*******************************************/
 
 		// template <class InputIterator>
-  		// void assign (InputIterator first, InputIterator last)
+  		// void assign (InputIterator first, InputIterator last,
+		//	typename ft::enable_if<InputIterator::is_iterator, InputIterator>::type = NULL))
 		// {
 		// 	if (empty())
 		// 		clear();
@@ -252,7 +272,8 @@ namespace ft
     	//void insert (iterator position, size_type n, const value_type& val);
 
 		// template <class InputIterator>
-		// void insert (iterator position, InputIterator first, InputIterator last);
+		// void insert (iterator position, InputIterator first, InputIterator last,
+		// typename ft::enable_if<InputIterator::is_iterator, InputIterator>::type = NULL));
 
 		// iterator erase (iterator position);
 		// iterator erase (iterator first, iterator last);
