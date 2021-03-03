@@ -6,7 +6,7 @@
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 12:05:06 by jereligi          #+#    #+#             */
-/*   Updated: 2021/03/01 16:02:12 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/03/01 16:33:51 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <memory>
 #include <stdexcept>
 #include "iterator.hpp"
+#include "const_iterator.hpp"
 #include "../utils.hpp"
 
 namespace ft
@@ -31,6 +32,7 @@ namespace ft
 		// typedef implementation-defined					iterator;
 		// typedef implementation-defined					const_iterator;
 		typedef typename ft::Iterator<T>					iterator;
+		typedef typename ft::const_iterator<T>				const_iterator;
 		typedef typename allocator_type::size_type			size_type;
 		typedef typename allocator_type::difference_type	difference_type;
 		typedef typename allocator_type::pointer			pointer;
@@ -106,19 +108,27 @@ namespace ft
 		iterator begin() {
 			return (iterator(_array));
 		}
-		// const_iterator begin() const {
-		// 	return (_array[0]);
-		// }
+		const_iterator begin() const {
+			return (const_iterator(_array));
+		}
 
 		iterator end() {
 			return (iterator(_array + _size));
 		}
-		// const_iterator end() const;
+		const_iterator end() const {
+			return (const_iterator(_array + _size));
+		}
 
-		// reverse_iterator rbegin();
+		// reverse_iterator rbegin()
+		// {
+		// 	return (iterator(_array + _size - 1));
+		// }
 		// const_reverse_iterator rbegin() const;
 
-		// reverse_iterator rend();
+		// reverse_iterator rend()
+		// {
+		// 	return (iterator(_array - 1));
+		// }
 		// const_reverse_iterator rend() const;
 
 		/*******************************************

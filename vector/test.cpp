@@ -2,8 +2,6 @@
 #include <iostream>
 #include <vector>
 #include "vector.hpp"
-#include "iterator.hpp"
-
 
 int		main(void)
 {
@@ -25,8 +23,8 @@ int		main(void)
 	vec.insert(i + 3, it, ite);
 
 
-	for (it = begin(vec); it < end(vec); it++)
-		std::cout << *it << std::endl;
+	// for (it = begin(vec); it < end(vec); it++)
+	// 	std::cout << *it << std::endl;
 	// std::cout << *ite << std::endl;
 
 	std::cout << std::endl << std::endl;
@@ -46,10 +44,13 @@ int		main(void)
 	ft::vector<int>::iterator ix = begin(vec1);
 	ft::vector<int>::iterator itx = begin(vec3);
 	ft::vector<int>::iterator iten = end(vec3);
+	ft::vector<int>::const_iterator ci = begin(vec1);
 
-	vec1.insert(ix + 3, itx, iten);
-	for (itx = begin(vec1); itx < end(vec1); itx++)
-		std::cout << *itx << std::endl;
+	std::cout << *ci << std::endl;
+
+	// vec1.insert(ix + 3, itx, iten);
+	// for (itx = begin(vec1); itx < end(vec1); itx++)
+	// 	std::cout << *itx << std::endl;
 
 	return 0;
 }
