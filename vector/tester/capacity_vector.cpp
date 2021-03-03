@@ -6,7 +6,7 @@
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/03 16:12:14 by jereligi          #+#    #+#             */
-/*   Updated: 2021/03/03 16:33:32 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/03/03 16:46:37 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 
 void	capacity_vector()
 {
+	// tester size() | max_size() | resize() | capacity | reserve
+
 	std::cout << ft_vector << std::endl;
 
 	// FT_VECTOR
@@ -34,7 +36,8 @@ void	capacity_vector()
 		else
 			std::cout << "}" << COLOR_RESET << std::endl << std::endl;
 	}
-	std::cout << COLOR_CYAN << "Test ft::vector size() | max_size() | resize() | capacity" << COLOR_RESET << std::endl << std::endl;
+	std::cout << COLOR_CYAN << "Test ft::vector size() | max_size() | resize() | capacity | reserve" \
+	<< COLOR_RESET << std::endl << std::endl;
 	std::cout << "vec.size() = " << vec.size() << std::endl;
 	std::cout << "vec.max_size() = " << vec.max_size() << std::endl;
 	vec.resize(2);
@@ -56,12 +59,15 @@ void	capacity_vector()
 	vec.resize(0);
 	std::cout << "vec.resize(0)" << std::endl;
 	std::cout << "vec.empty is " << std::boolalpha << vec.empty() << std::endl;
-	std::cout << std::endl;
+	vec.reserve(12);
+	std::cout << "vec.reserve(12)" << std::endl;
+	std::cout << "vec.capacity() = " << vec.capacity() << std::endl << std::endl;
 
 	// STD_VECTOR
 	std::vector<int>			vec1(4, 42);
 
-	std::cout << COLOR_CYAN << "Test std::vector size() | max_size() | resize() | capacity" << COLOR_RESET << std::endl << std::endl;
+	std::cout << COLOR_CYAN << "Test std::vector size() | max_size() | resize() | capacity | reserve" \
+	<< COLOR_RESET << std::endl << std::endl;
 	std::cout << "vec.size() = " << vec1.size() << std::endl;
 	std::cout << "vec.max_size() = " << vec1.max_size() << std::endl;
 	vec1.resize(2);
@@ -83,12 +89,8 @@ void	capacity_vector()
 	vec1.resize(0);
 	std::cout << "vec.resize(0)" << std::endl;
 	std::cout << "vec.empty is " << std::boolalpha << vec1.empty() << std::endl;
-	std::cout << std::endl;
-
-}
-
-int		main(void)
-{
-	capacity_vector();
-	return 0;
+	vec1.reserve(12);
+	std::cout << "vec.reserve(12)" << std::endl;
+	std::cout << "vec.capacity() = " << vec1.capacity() << std::endl << std::endl;
+	next_test();
 }

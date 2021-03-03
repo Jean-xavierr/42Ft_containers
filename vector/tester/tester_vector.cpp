@@ -6,12 +6,13 @@
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/03 16:12:32 by jereligi          #+#    #+#             */
-/*   Updated: 2021/03/03 16:12:33 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/03/03 16:46:28 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tester_iterator_vector.cpp"
 #include "tester_reverse_iterator.cpp"
+#include "tester_capacity_vector.cpp"
 
 void	next_test()
 {
@@ -33,5 +34,6 @@ int		main(void)
 	reverse_iterator_arithmetics();
 	reverse_iterator_booleans();
 	reverse_iterator_deference();
+	capacity_vector();
 	return (0);
 }
