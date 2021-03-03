@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   const_reverse_iterator.hpp                         :+:      :+:    :+:   */
+/*   reverse_iterator.hpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/01 16:07:03 by jereligi          #+#    #+#             */
-/*   Updated: 2021/03/03 11:15:31 by jereligi         ###   ########.fr       */
+/*   Created: 2021/02/25 11:06:31 by jereligi          #+#    #+#             */
+/*   Updated: 2021/03/03 16:07:10 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CONST_REVERSE_ITERATOR_HPP
-#define CONST_REVERSE_ITERATOR_HPP
+
+#ifndef REVERSE_ITERATOR_HPP
+#define REVERSE_ITERATOR_HPP
 
 #include "iterator.hpp"
-#include "reverse_iterator.hpp"
 
 namespace ft
 {
 	template <typename T>
-	class	const_reverse_iterator
+	class	reverse_iterator
 	{
 	public:
 		static const bool				is_iterator = true;
@@ -29,14 +29,13 @@ namespace ft
 		*****  Member Functions (Coplien Form) *****
 		*******************************************/
 		
-		const_reverse_iterator(void) {};
-		const_reverse_iterator(const T* src) { _ptr = src; };
-		const_reverse_iterator(Iterator<T> const &src) { _ptr = src.operator->(); };
-		const_reverse_iterator(reverse_iterator<T> const &src) { _ptr = src.operator->(); };
-		const_reverse_iterator(const_reverse_iterator const &src) { *this = src; } ;
-		virtual ~const_reverse_iterator() {};
+		reverse_iterator(void) {};
+		reverse_iterator(T* src) { _ptr = src; };
+		reverse_iterator(reverse_iterator const &src) { *this = src; } ;
+		reverse_iterator(Iterator<T> const &src) { _ptr = src.operator->(); };
+		virtual ~reverse_iterator() {};
 
-		const_reverse_iterator &operator=(const_reverse_iterator const &src) {
+		reverse_iterator &operator=(reverse_iterator const &src) {
 			_ptr = src.operator->(); 
 			return (*this); 
 		};
@@ -46,23 +45,23 @@ namespace ft
 		*****    == | != | > | >= | < | <=     *****
 		*******************************************/
 
-		bool	operator==(const_reverse_iterator const& src) const { 
+		bool	operator==(reverse_iterator const& src) const { 
 			return (_ptr == src._ptr);
 		};
-		bool	operator!=(const_reverse_iterator const& src) const {
+		bool	operator!=(reverse_iterator const& src) const {
 			return (_ptr != src._ptr); 
 		};
-		bool	operator>(const_reverse_iterator const& src) const { 
-			return (_ptr > src._ptr); 
-		};
-		bool	operator>=(const_reverse_iterator const& src) const { 
-			return (_ptr >= src._ptr); 
-		};
-		bool	operator<(const_reverse_iterator const& src) const { 
+		bool	operator>(reverse_iterator const& src) const { 
 			return (_ptr < src._ptr); 
 		};
-		bool	operator<=(const_reverse_iterator const& src) const { 
+		bool	operator>=(reverse_iterator const& src) const { 
 			return (_ptr <= src._ptr); 
+		};
+		bool	operator<(reverse_iterator const& src) const { 
+			return (_ptr > src._ptr); 
+		};
+		bool	operator<=(reverse_iterator const& src) const { 
+			return (_ptr >= src._ptr); 
 		};
 
 		/*******************************************
@@ -70,34 +69,34 @@ namespace ft
 		*****     + | - | ++ | -- | += | -=    *****
 		*******************************************/
 
-		const_reverse_iterator			operator+(difference_type src) {
-			return (const_reverse_iterator(_ptr - src));
+		reverse_iterator			operator+(difference_type src) {
+			return (reverse_iterator(_ptr - src));
 		};
-		const_reverse_iterator			operator-(difference_type src) {
-			return (const_reverse_iterator(_ptr + src));
+		reverse_iterator			operator-(difference_type src) {
+			return (reverse_iterator(_ptr + src));
 		};
-		difference_type		operator+(const_reverse_iterator src) {
+		difference_type		operator+(reverse_iterator src) {
 			return (_ptr - src._ptr);
 		};
-		difference_type		operator-(const_reverse_iterator src) {
+		difference_type		operator-(reverse_iterator src) {
 			return (_ptr + src._ptr);
 		};
 
-		const_reverse_iterator			operator++() {
+		reverse_iterator			operator++() {
 			_ptr--;
 			return (*this);
 		};
-		const_reverse_iterator			operator++(int) {
+		reverse_iterator			operator++(int) {
 			_ptr--; 
-			return (const_reverse_iterator(_ptr + 1));
+			return (reverse_iterator(_ptr + 1));
 		};
-		const_reverse_iterator			operator--() {
+		reverse_iterator			operator--() {
 			_ptr++;
 			return (*this);
 		};
-		const_reverse_iterator			operator--(int) {
+		reverse_iterator			operator--(int) {
 			_ptr++;
-			return (const_reverse_iterator(_ptr - 1));
+			return (reverse_iterator(_ptr - 1));
 		};
 
 		void				operator+=(difference_type src) {
@@ -111,22 +110,27 @@ namespace ft
 		*****       Operator deferencing       *****
 		*****          * | [] | ->       	   *****
 		*******************************************/
-
-		const T&	operator*() const {
+		T&			operator*() {
+			return (*_ptr);
+		};
+		const T*	operator*() const {
 			return (*_ptr); 
+		};
+		T&			operator[](difference_type src) {
+			return (*(_ptr + src));
 		};
 		const T&	operator[](difference_type src) const {
 			return (*(_ptr + src));
 		};
-		const T*	operator->() {
+		T*			operator->() {
 			return (_ptr);
 		};
-		const T*	operator->() const {
+		T*			operator->() const {
 			return (_ptr); 
 		};											
 
 	private:
-		const T*	_ptr;
+		T*	_ptr;
 		
 	};
 }

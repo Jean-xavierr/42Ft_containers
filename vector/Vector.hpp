@@ -6,7 +6,7 @@
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 12:05:06 by jereligi          #+#    #+#             */
-/*   Updated: 2021/03/03 11:13:47 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/03/03 16:34:24 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 
 #include <memory>
 #include <stdexcept>
-#include "iterator.hpp"
-#include "const_iterator.hpp"
-#include "reverse_iterator.hpp"
-#include "const_reverse_iterator.hpp"
+#include "./iterator/iterator.hpp"
+#include "./iterator/const_iterator.hpp"
+#include "./iterator/reverse_iterator.hpp"
+#include "./iterator/const_reverse_iterator.hpp"
 #include "../utils.hpp"
 
 namespace ft
@@ -171,8 +171,8 @@ namespace ft
 		bool empty() const
 		{
 			if (_size > 0)
-				return (1);
-			return (0);
+				return (0);
+			return (1);
 		}
 		
 		void reserve (size_type n)
