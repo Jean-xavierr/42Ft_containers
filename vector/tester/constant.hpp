@@ -6,9 +6,16 @@
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/03 16:12:08 by jereligi          #+#    #+#             */
-/*   Updated: 2021/03/03 16:12:11 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/03/04 11:44:57 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef CONSTANT_HPP
+#define CONSTANT_HPP
+
+#include <iostream>
+#include <vector>
+#include <string>
 
 #define COLOR_RESET		"\033[0m"
 #define COLOR_RED		"\033[1;31m"
@@ -21,3 +28,5 @@
 #define ft_vector		COLOR_BLUE << "----- ft::vector -----" << COLOR_RESET << std::endl
 
 void	next_test();
+
+#endif

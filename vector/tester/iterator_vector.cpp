@@ -1,18 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tester_iterator_vector.cpp                         :+:      :+:    :+:   */
+/*   iterator_vector.cpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/03 16:12:17 by jereligi          #+#    #+#             */
-/*   Updated: 2021/03/03 16:12:18 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/03/04 10:49:04 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
-#include <vector>
-#include <string>
 #include "../vector.hpp"
 #include "constant.hpp"
 

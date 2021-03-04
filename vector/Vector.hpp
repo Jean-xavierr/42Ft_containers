@@ -6,7 +6,7 @@
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 12:05:06 by jereligi          #+#    #+#             */
-/*   Updated: 2021/03/03 16:34:24 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/03/04 15:05:02 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include <memory>
 #include <stdexcept>
+#include <iostream>
 #include "./iterator/iterator.hpp"
 #include "./iterator/const_iterator.hpp"
 #include "./iterator/reverse_iterator.hpp"
@@ -60,7 +61,9 @@ namespace ft
 			_size = 0;
 			_capacity = 0;
 			_alloc = alloc;
-			assign(n, val);
+			reserve(n);
+			for (size_type i = 0; i < n; i++)
+				push_back(val);
 		}
 		
 		// range
@@ -149,7 +152,7 @@ namespace ft
 			return (_alloc.max_size());
 		}
 
-		void resize (size_type n, value_type val = value_type())
+		void resize(size_type n, value_type val = value_type())
 		{
 			if (n < _size)
 			{
@@ -175,7 +178,7 @@ namespace ft
 			return (1);
 		}
 		
-		void reserve (size_type n)
+		void reserve(size_type n)
 		{
 			if (n > _capacity)
 			{
@@ -244,7 +247,7 @@ namespace ft
   		void assign (InputIterator first, InputIterator last,
 		typename ft::enable_if<InputIterator::is_iterator, InputIterator>::type = NULL)
 		{
-			if (empty())
+			if (empty() == 0)
 				clear();
 			while (first < last)
 			{
@@ -253,17 +256,17 @@ namespace ft
 			}
 		}
 
-		void assign (size_type n, const value_type& val)
+		void assign(size_type n, const value_type& val)
 		{
-			if (empty())
+			if (empty() == 0)
 				clear();
 			for (size_type i = 0; i < n; i++)
 				push_back(val);
 		}
 
-		void push_back (const value_type& val)
+		void push_back(const value_type& val)
 		{
-			if (_size + 1 >= _capacity)
+			if (_size >= _capacity)
 			{
 				if (_size == 0)
 					reserve(1);
@@ -299,7 +302,7 @@ namespace ft
 			return (position);
 		}
 
-    	void insert (iterator position, size_type n, const value_type& val)
+    	void insert(iterator position, size_type n, const value_type& val)
 		{
 			if (_size > + 1 >= _capacity)
 			{
@@ -322,7 +325,14 @@ namespace ft
 		void insert(iterator position, InputIterator first, InputIterator last,
 		typename ft::enable_if<InputIterator::is_iterator, InputIterator>::type = NULL)
 		{
-			if (_size > + 1 >= _capacity)
+			size_type count = 0;
+			while (first != last)
+			{
+				first++;
+				count++;
+			}
+			first -= count;
+			if (_capacity - _size <= count)
 			{
 				if (_size == 0)
 					reserve(1);
@@ -342,7 +352,7 @@ namespace ft
 				push_back(*it);
 		}
 
-		iterator erase (iterator position)
+		iterator erase(iterator position)
 		{
 			ft::vector<T>	tmp(position + 1, end());
 
@@ -354,7 +364,7 @@ namespace ft
 			return (position);
 		}
 		
-		iterator erase (iterator first, iterator last)
+		iterator erase(iterator first, iterator last)
 		{
 			iterator	tmp = first;
 			while (tmp != last)

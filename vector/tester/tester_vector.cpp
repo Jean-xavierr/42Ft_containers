@@ -6,13 +6,15 @@
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/03 16:12:32 by jereligi          #+#    #+#             */
-/*   Updated: 2021/03/03 16:46:28 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/03/04 14:59:20 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tester_iterator_vector.cpp"
-#include "tester_reverse_iterator.cpp"
-#include "tester_capacity_vector.cpp"
+#include "iterator_vector.cpp"
+#include "reverse_iterator.cpp"
+#include "capacity_vector.cpp"
+#include "element_acces_vector.cpp"
+#include "modifiers_vector.cpp"
 
 void	next_test()
 {
@@ -25,15 +27,20 @@ void	next_test()
 
 int		main(void)
 {
-	iterator_incrementers();
-	iterator_arithmetics();
-	iterator_booleans();
-	iterator_deference();
 
-	reverse_iterator_incrementers();
-	reverse_iterator_arithmetics();
-	reverse_iterator_booleans();
-	reverse_iterator_deference();
-	capacity_vector();
+	// capacity_vector();
+	// element_acces();
+	ft_modifiers_vector();
+	std_modifiers_vector();
+
+	// iterator_incrementers();
+	// iterator_arithmetics();
+	// iterator_booleans();
+	// iterator_deference();
+
+	// reverse_iterator_incrementers();
+	// reverse_iterator_arithmetics();
+	// reverse_iterator_booleans();
+	// reverse_iterator_deference();
 	return (0);
 }

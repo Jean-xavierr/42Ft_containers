@@ -1,18 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tester_reverse_iterator.cpp                        :+:      :+:    :+:   */
+/*   reverse_iterator.cpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/03 16:12:24 by jereligi          #+#    #+#             */
-/*   Updated: 2021/03/03 16:12:26 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/03/04 10:48:03 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
-#include <vector>
-#include <string>
 #include "../vector.hpp"
 #include "constant.hpp"
 
