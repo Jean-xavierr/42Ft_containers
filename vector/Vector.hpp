@@ -6,7 +6,7 @@
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 12:05:06 by jereligi          #+#    #+#             */
-/*   Updated: 2021/03/04 15:05:02 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/03/08 11:37:49 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -325,6 +325,7 @@ namespace ft
 		void insert(iterator position, InputIterator first, InputIterator last,
 		typename ft::enable_if<InputIterator::is_iterator, InputIterator>::type = NULL)
 		{
+			difference_type		int_pos = position - this->begin();
 			size_type count = 0;
 			while (first != last)
 			{
@@ -339,7 +340,7 @@ namespace ft
 				else
 					reserve(_capacity * 2);
 			}
-			ft::vector<T>	tmp(position, end());
+			ft::vector<T>	tmp(begin() + int_pos, end());
 			for (size_type i = 0; i < tmp.size(); i++)
 				pop_back();
 			while (first != last)

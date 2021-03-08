@@ -6,7 +6,7 @@
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/03 16:12:32 by jereligi          #+#    #+#             */
-/*   Updated: 2021/03/04 14:59:20 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/03/08 12:17:58 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,19 @@ void	next_test()
 int		main(void)
 {
 
-	// capacity_vector();
-	// element_acces();
+	capacity_vector();
+	element_acces();
 	ft_modifiers_vector();
 	std_modifiers_vector();
 
-	// iterator_incrementers();
-	// iterator_arithmetics();
-	// iterator_booleans();
-	// iterator_deference();
+	iterator_incrementers();
+	iterator_arithmetics();
+	iterator_booleans();
+	iterator_deference();
 
-	// reverse_iterator_incrementers();
-	// reverse_iterator_arithmetics();
-	// reverse_iterator_booleans();
-	// reverse_iterator_deference();
+	reverse_iterator_incrementers();
+	reverse_iterator_arithmetics();
+	reverse_iterator_booleans();
+	reverse_iterator_deference();
 	return (0);
 }
