@@ -6,7 +6,7 @@
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 11:46:10 by jereligi          #+#    #+#             */
-/*   Updated: 2021/03/09 14:16:44 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/03/09 15:48:32 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ namespace ft
 		typedef typename allocator_type::reference			reference;
 		typedef typename allocator_type::const_reference	const_reference;
 
-		// Node<T>			*get_prev(list) { return (_node->prev); };
-		// Node<T>			*get_next(list) { return (_node->next); };
-		// T				get_val(Node<T> *node) { return (node->val); };
+		// Node<T>			*get_prev() { return (_node->prev); };
+		// Node<T>			*get_next() { return (_node->next); };
+		// T				get_val(Node<T> *) { return (_node->val); };
 
 		void				print_list()
 		{
