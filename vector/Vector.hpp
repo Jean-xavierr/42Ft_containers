@@ -6,16 +6,13 @@
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 12:05:06 by jereligi          #+#    #+#             */
-/*   Updated: 2021/03/08 11:37:49 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/03/08 14:11:30 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP
 #define VECTOR_HPP
 
-#include <memory>
-#include <stdexcept>
-#include <iostream>
 #include "./iterator/iterator.hpp"
 #include "./iterator/const_iterator.hpp"
 #include "./iterator/reverse_iterator.hpp"
