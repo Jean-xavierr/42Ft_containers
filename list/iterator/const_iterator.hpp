@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   iterator.hpp                                       :+:      :+:    :+:   */
+/*   const_iterator.hpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/25 11:06:31 by jereligi          #+#    #+#             */
-/*   Updated: 2021/03/10 14:14:05 by jereligi         ###   ########.fr       */
+/*   Created: 2021/03/01 16:07:03 by jereligi          #+#    #+#             */
+/*   Updated: 2021/03/10 14:50:08 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef CONST_ITERATOR_HPP
+#define CONST_ITERATOR_HPP
 
-#ifndef ITERATOR_HPP
-#define ITERATOR_HPP
-
-#include "../../utils.hpp"
+#include "iterator.hpp"
 
 namespace ft
 {
 	template <typename T, typename Node>
-	class	Iterator
+	class	const_iterator
 	{
 	public:
 		static const bool				is_iterator = true;
@@ -35,25 +34,26 @@ namespace ft
 		*****  Member Functions (Coplien Form) *****
 		*******************************************/
 		
-		Iterator(void) {};
-		Iterator(Node* src) { _node = src; };
-		Iterator(Iterator const &src) { *this = src; } ;
-		virtual ~Iterator() {};
+		const_iterator(void) {};
+		const_iterator(const T* src) { _node = src; };
+		const_iterator(Iterator<T, Node> const &src) { _node = src.operator->(); };
+		const_iterator(const_iterator const &src) { *this = src; } ;
+		virtual ~const_iterator() {};
 
-		Iterator &operator=(Iterator const &src) {
-			_node = src._node; 
+		const_iterator &operator=(const_iterator const &src) {
+			_node = src.operator->(); 
 			return (*this); 
 		};
 
 		/*******************************************
 		*****         Operator Boolean         *****
-		*****            == | !=               *****
+		*****             == | !=              *****
 		*******************************************/
 
-		bool	operator==(Iterator const& src) const { 
+		bool	operator==(const_iterator const& src) const { 
 			return (_node == src._node);
 		};
-		bool	operator!=(Iterator const& src) const {
+		bool	operator!=(const_iterator const& src) const {
 			return (_node != src._node); 
 		};
 
@@ -62,23 +62,22 @@ namespace ft
 		*****             ++ | --              *****
 		*******************************************/
 
-		Iterator			operator++() {
+		const_iterator			operator++() {
 			_node = _node->next;
 			return (*this);
 		};
-		Iterator			operator++(int) {
-			Iterator	tmp = *this;
+		const_iterator			operator++(int) {
+			const_iterator	tmp = *this;
 
 			++(*this); 
 			return (tmp);
 		};
-
-		Iterator			operator--() {
+		const_iterator			operator--() {
 			_node = _node->prev;
 			return (*this);
 		};
-		Iterator			operator--(int) {
-			Iterator	tmp = *this;
+		const_iterator			operator--(int) {
+			const_iterator	tmp = *this;
 
 			--(*this); 
 			return (tmp);
@@ -86,24 +85,21 @@ namespace ft
 
 		/*******************************************
 		*****       Operator deferencing       *****
-		*****             * | ->         	   *****
+		*****            * | ->          	   *****
 		*******************************************/
 
-		const_reference		operator*() const {
-			return (_node->val);
+		const_reference	operator*() const {
+			return (*_node); 
 		};
-		reference			operator*() {
-			return (_node->val); 
-		};						
-		Node*			operator->() {
+		const_pointer	operator->() {
 			return (_node);
 		};
-		Node*			operator->() const {
+		const_pointer	operator->() const {
 			return (_node); 
 		};											
 
 	private:
-		Node		*_node;
+		Node	*_node;
 		
 	};
 }

@@ -57,5 +57,20 @@ int        main(void)
 	std::list<int>	list;
 	std::cout << "max size node : " << node.max_size() << std::endl;
 	std::cout << "max size list : " << list.max_size() << std::endl;
+
+
+	ft::list<int>::iterator		it;
+	for (it = x.begin(); it != x.end(); it++)
+		std::cout << *it << std::endl;
+
+	ft::list<int>	y(2, 8);
+	std::cout << "Y : " << std::endl;
+	for (it = y.begin(); it != y.end(); it++)
+		std::cout << *it << std::endl;
+
+	ft::list<int>	y2(y);
+	std::cout << "Y2 : " << std::endl;
+	for (it = y2.begin(); it != y2.end(); it++)
+		std::cout << *it << std::endl;
 	return (0);
 }

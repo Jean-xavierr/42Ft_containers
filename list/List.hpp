@@ -6,7 +6,7 @@
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 11:46:10 by jereligi          #+#    #+#             */
-/*   Updated: 2021/03/09 15:48:32 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/03/10 16:15:06 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 #define LIST_HPP
 
 #include "../utils.hpp"
-#include <iostream>
-#include <list>
+#include "./iterator/iterator.hpp"
+#include "./iterator/const_iterator.hpp"
+#include "./iterator/reverse_iterator.hpp"
+#include "./iterator/const_reverse_iterator.hpp"
 
 template <typename T>
 struct Node
@@ -32,18 +34,19 @@ namespace ft
 	{
 	public:
 
-		typedef T											value_type;
-		typedef Allocator									allocator_type;
-		typedef typename std::size_t						size_type;
-		typedef typename std::ptrdiff_t						difference_type;
-		typedef typename allocator_type::pointer			pointer;
-		typedef typename allocator_type::const_pointer		const_pointer;
-		typedef typename allocator_type::reference			reference;
-		typedef typename allocator_type::const_reference	const_reference;
-
-		// Node<T>			*get_prev() { return (_node->prev); };
-		// Node<T>			*get_next() { return (_node->next); };
-		// T				get_val(Node<T> *) { return (_node->val); };
+		typedef T													value_type;
+		typedef Allocator											allocator_type;
+		typedef typename std::size_t								size_type;
+		typedef typename std::ptrdiff_t								difference_type;
+		typedef typename allocator_type::pointer					pointer;
+		typedef typename allocator_type::const_pointer				const_pointer;
+		typedef typename allocator_type::reference					reference;
+		typedef typename allocator_type::const_reference			const_reference;
+		typedef Node<T>												node_type;
+		typedef typename ft::Iterator<T, node_type>					iterator;
+		typedef typename ft::const_iterator<T, node_type>			const_iterator;
+		typedef typename ft::reverse_iterator<T, node_type>			reverse_iterator;
+		typedef typename ft::const_reverse_iterator<T, node_type>	const_reverse_iterator;
 
 		void				print_list()
 		{
@@ -73,34 +76,96 @@ namespace ft
 		}
 		
 		//fill	
-		// explicit list (size_type n, const value_type& val = value_type(),
-		//                 const allocator_type& alloc = allocator_type())
-		// {
-		// 	_node = new Node<T>
-		// 	_size = n;
-		// 	_alloc = alloc;
-		// }
+		explicit list (size_type n, const value_type& val = value_type(),
+		                const allocator_type& alloc = allocator_type())
+		{
+			_node = new Node<T>;
+			_node->next = _node;
+			_node->prev = _node;
+			_node->val = 0;
+			_size = 0;
+			_alloc = alloc;
+			for (size_type i = 0; i < n; i++)
+				push_back(val);
+		}
 		
 		//range	
-		// template <class InputIterator>
-		// list (InputIterator first, InputIterator last,
-		//          const allocator_type& alloc = allocator_type());
+		template <class InputIterator>
+		list (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(),
+		typename ft::enable_if<InputIterator::is_iterator, InputIterator>::type = NULL) 
+		{	
+			_node = new Node<T>;
+			_node->next = _node;
+			_node->prev = _node;
+			_node->val = 0;
+			_size = 0;
+			_alloc = alloc;
+			while (first != last)
+			{
+				push_back(*first);
+				first++;
+			}
+		}
 		
 		//copy	
-		// list (const list& x);
+		list (list& x)
+		{	
+			_node = new Node<T>;
+			_node->next = _node;
+			_node->prev = _node;
+			_node->val = 0;
+			_size = 0;
+			_alloc = allocator_type();
+
+			*this = x;
+		}
+
+		//destructor
+		~list(){
+			this->clear();
+			delete _node;
+		}
+
+		list& operator=(list& x) 
+		{
+			clear();
+			for (iterator it = x.begin(); it != x.end(); it++)
+				push_back(*it);
+			return (*this);
+		}
 
 		/*******************************************
 		*****             Iterators            *****
 		*******************************************/
 
-		// iterator begin();
-		// const_iterator begin() const;
+		iterator begin() {
+			return (iterator(_node->next));
+		}
+		const_iterator begin() const {
+			return (const_iterator(_node->next));
+		}
 	    
-		// iterator end();
-		// const_iterator end() const;
+		iterator end() {
+			return (iterator(_node));
+		}
+		const_iterator end() const
+		{
+			return (const_iterator(_node));
+		}
 
-		// reverse_iterator rend();
-		// const_reverse_iterator rend() const;
+		reverse_iterator rbegin() {
+			return (reverse_iterator(_node));
+		}
+		const_reverse_iterator rbegin() const {
+			return (const_reverse_iterator(_node));
+		}
+
+		reverse_iterator rend() {
+			return (reverse_iterator(_node->prev));
+		}
+		const_reverse_iterator rend() const {
+			return (reverse_const_iterator(_node->prev));
+		}
 
 		/*******************************************
 		*****            Capacity              *****

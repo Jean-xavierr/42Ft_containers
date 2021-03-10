@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   iterator.hpp                                       :+:      :+:    :+:   */
+/*   reverse_iterator.hpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/25 11:06:31 by jereligi          #+#    #+#             */
-/*   Updated: 2021/03/10 14:14:05 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/03/10 14:20:00 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-#ifndef ITERATOR_HPP
-#define ITERATOR_HPP
+#ifndef REVERSE_ITERATOR_HPP
+#define REVERSE_ITERATOR_HPP
 
 #include "../../utils.hpp"
 
 namespace ft
 {
 	template <typename T, typename Node>
-	class	Iterator
+	class	reverse_iterator
 	{
 	public:
 		static const bool				is_iterator = true;
@@ -35,12 +35,12 @@ namespace ft
 		*****  Member Functions (Coplien Form) *****
 		*******************************************/
 		
-		Iterator(void) {};
-		Iterator(Node* src) { _node = src; };
-		Iterator(Iterator const &src) { *this = src; } ;
-		virtual ~Iterator() {};
+		reverse_iterator(void) {};
+		reverse_iterator(Node* src) { _node = src; };
+		reverse_iterator(Iterator<T, Node> const &src) { *this = src; } ;
+		virtual ~reverse_iterator() {};
 
-		Iterator &operator=(Iterator const &src) {
+		reverse_iterator &operator=(reverse_iterator const &src) {
 			_node = src._node; 
 			return (*this); 
 		};
@@ -50,10 +50,10 @@ namespace ft
 		*****            == | !=               *****
 		*******************************************/
 
-		bool	operator==(Iterator const& src) const { 
+		bool	operator==(reverse_iterator const& src) const { 
 			return (_node == src._node);
 		};
-		bool	operator!=(Iterator const& src) const {
+		bool	operator!=(reverse_iterator const& src) const {
 			return (_node != src._node); 
 		};
 
@@ -62,25 +62,25 @@ namespace ft
 		*****             ++ | --              *****
 		*******************************************/
 
-		Iterator			operator++() {
-			_node = _node->next;
-			return (*this);
-		};
-		Iterator			operator++(int) {
-			Iterator	tmp = *this;
-
-			++(*this); 
-			return (tmp);
-		};
-
-		Iterator			operator--() {
+		reverse_iterator			operator++() {
 			_node = _node->prev;
 			return (*this);
 		};
-		Iterator			operator--(int) {
-			Iterator	tmp = *this;
+		reverse_iterator			operator++(int) {
+			reverse_iterator	tmp = *this;
 
 			--(*this); 
+			return (tmp);
+		};
+
+		reverse_iterator			operator--() {
+			_node = _node->next;
+			return (*this);
+		};
+		reverse_iterator			operator--(int) {
+			reverse_iterator	tmp = *this;
+
+			++(*this); 
 			return (tmp);
 		};
 
