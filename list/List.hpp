@@ -6,7 +6,7 @@
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 11:46:10 by jereligi          #+#    #+#             */
-/*   Updated: 2021/03/10 16:15:06 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/03/15 14:13:16 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,7 +185,20 @@ namespace ft
 		size_type max_size() const {
 			return (std::numeric_limits<difference_type>::max() / (sizeof(Node<T>) / 2 ?: 1));
 		}
-		// void resize (size_type n, value_type val = value_type());
+
+		void resize (size_type n, value_type val = value_type())
+		{
+			if (n < _size)
+			{
+				while (n < _size)
+					pop_back();
+			}
+			else 
+			{
+				for (size_type i = _size; i < n; i++)
+					push_back(val);
+			}
+		}
 
 		/*******************************************
 		*****         Element access           *****
@@ -209,17 +222,78 @@ namespace ft
 		*****            Modifiers             *****
 		*******************************************/
 
-		// template <class InputIterator>
-		// void assign (InputIterator first, InputIterator last);
-		// void assign (size_type n, const value_type& val);
+		template <class InputIterator>
+		void assign (InputIterator first, InputIterator last,
+		typename ft::enable_if<InputIterator::is_iterator, InputIterator>::type = NULL)
+		{
+			if (empty() == 0)
+				clear();
+			while (first != last)
+			{
+				push_back(*first);
+				first++;
+			}
+		}
 
-		// iterator insert (iterator position, const value_type& val);	
-    	// void insert (iterator position, size_type n, const value_type& val);	
-		// template <class InputIterator>
-    	// void insert (iterator position, InputIterator first, InputIterator last);
+		void assign (size_type n, const value_type& val) 
+		{
+			if (empty() == 0)
+				clear();
+			for (size_type i = 0; i < n; i++)
+				push_back(val);
 
-		// iterator erase (iterator position);
-		// iterator erase (iterator first, iterator last);
+		}
+
+		iterator insert (iterator position, const value_type& val)
+		{
+			Node<T>		*new_elem = new Node<T>;
+			Node<T>		*tmp = position.operator->();
+
+			new_elem->val = val;
+			new_elem->next = tmp->prev->next;
+			new_elem->prev = tmp->prev;
+
+			tmp->prev->next = new_elem;
+			tmp->prev = new_elem;
+
+			_size++;
+			return (--position);
+		}	
+    	void insert(iterator position, size_type n, const value_type& val)
+		{
+			for (size_type i = 0; i < n; i++)
+				insert(position, val);
+		}	
+		template <class InputIterator>
+    	void insert (iterator position, InputIterator first, InputIterator last,
+		typename ft::enable_if<InputIterator::is_iterator, InputIterator>::type = NULL)
+		{			
+			while (first != last)
+			{
+				insert(position, *first);
+				first++;
+			}
+		}
+
+		iterator erase (iterator position)
+		{
+			Node<T>		*tmp = position.operator->();
+
+			tmp->prev->next = tmp->next;
+			tmp->next->prev = tmp->prev;
+
+			delete tmp;
+			_size--;
+
+			return (position);
+		}
+
+		iterator erase (iterator first, iterator last)
+		{
+			while (first != last)
+				erase(first++);
+			return (first);
+		}
 
 		void push_back (const value_type& val)
 		{
@@ -240,6 +314,7 @@ namespace ft
 			
 			_node->prev->prev->next = _node;
 			_node->prev = _node->prev->prev;
+
 			delete tmp;
 			_size--;
 		}
@@ -252,6 +327,7 @@ namespace ft
 			new_node->prev = _node;
 			new_node->val = val;
 
+			_node->next->prev = new_node;
 			_node->next = new_node;
 			_size++;
 		}
