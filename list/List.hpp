@@ -6,7 +6,7 @@
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 11:46:10 by jereligi          #+#    #+#             */
-/*   Updated: 2021/03/15 14:13:16 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/03/15 16:57:42 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -363,16 +363,85 @@ namespace ft
 		*****       List operations            *****
 		*******************************************/
 
-		// void splice (iterator position, list& x);	
-		// void splice (iterator position, list& x, iterator i);	
-		// void splice (iterator position, list& x, iterator first, iterator last);
-		
-		// void remove (const value_type& val);
-		
-		// template <class Predicate>
-  		// void remove_if (Predicate pred);
+		void splice (iterator position, list& x)
+		{
+			splice(position, x, x.begin(), x.end());
+		}
 
-		// void unique();
+		void splice(iterator position, list& x, iterator i)
+		{
+			Node<T>		*node = i.operator->();
+			Node<T>		*dest = position.operator->();
+
+			// delete node from x
+			node->next->prev = node->prev;
+			node->prev->next = node->next;
+
+			// init node
+			node->next = dest;
+			node->prev = dest->prev;
+
+			// add node
+			dest->prev->next = node;
+			dest->prev = node;
+
+			x._size--;
+			_size++;
+		}
+
+		void splice(iterator position, list& x, iterator first, iterator last) 
+		{
+			while (first != last)
+				splice(position, x, first++);
+		}
+		
+		void remove (const value_type& val)
+		{	
+			iterator tmp;
+
+			for (iterator it = begin(); it != end(); it++)
+			{
+				if (*it == val)
+				{
+					tmp = ++it;
+					erase(--it);
+					it = --tmp;
+				}
+			}
+		}
+		
+		template <class Predicate>
+  		void remove_if (Predicate pred)
+		{
+			iterator tmp;
+
+			for (iterator it = begin(); it != end(); it++)
+			{
+				if (pred(*it))
+				{
+					tmp = ++it;
+					erase(--it);
+					it = --tmp;
+				}
+			}
+		}
+
+		void unique()
+		{
+			iterator	elem = begin();
+			iterator	next = ++begin();
+
+			while (next != end())
+			{
+				if (*elem == *next)
+				{
+					erase(elem);
+				}
+				elem = next;
+				++next;
+			}
+		}
+
 		// template <class BinaryPredicate>
   		// void unique (BinaryPredicate binary_pred);
 

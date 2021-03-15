@@ -22,7 +22,29 @@ int        main(void)
 	it = ++(l1.begin());
 	++it;
 	l1.erase(it, --(l1.end()));
+	l1.push_back(89);
 	std::cout << std::endl;
 	for (it = l1.begin(); it != l1.end(); it++)
+		std::cout << *it << std::endl;
+
+	it = ++l2.begin();
+	++it;
+	++it;
+	l1.splice(++l1.begin(), l2, it);
+
+	std::cout << std::endl << "Splice : " << std::endl;	
+	for (it = l1.begin(); it != l1.end(); it++)
+		std::cout << *it << std::endl;
+
+	l2.push_back(5);
+	l2.push_back(2);
+	l2.push_back(3);
+	l2.push_back(3);
+	std::cout << std::endl << "l2" << std::endl;
+	for (it = l2.begin(); it != l2.end(); it++)
+		std::cout << *it << std::endl;
+	l2.unique();
+	std::cout << std::endl << "l2 unique" << std::endl;
+	for (it = l2.begin(); it != l2.end(); it++)
 		std::cout << *it << std::endl;
 }
