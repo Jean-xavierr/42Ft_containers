@@ -47,4 +47,28 @@ int        main(void)
 	std::cout << std::endl << "l2 unique" << std::endl;
 	for (it = l2.begin(); it != l2.end(); it++)
 		std::cout << *it << std::endl;
+	l2.sort();
+	std::cout << std::endl << "l2 sort" << std::endl;
+	for (it = l2.begin(); it != l2.end(); it++)
+		std::cout << *it << std::endl;
+	l2.push_back(9);
+	l2.push_back(12);
+	std::list<int>		l3(1, 1);
+	l3.push_back(8);
+	l3.push_back(11);
+	l3.push_back(10);
+	l3.push_back(50);
+
+	l2.sort();
+	std::cout << std::endl << "l2 sort" << std::endl;
+	for (it = l2.begin(); it != l2.end(); it++)
+		std::cout << *it << std::endl;
+	l3.sort();
+	std::cout << std::endl << "l3 sort" << std::endl;
+	for (it = l3.begin(); it != l3.end(); it++)
+		std::cout << *it << std::endl;
+	l2.merge(l3);
+	std::cout << std::endl << "l2 merge" << std::endl;
+	for (it = l2.begin(); it != l2.end(); it++)
+		std::cout << *it << std::endl;
 }

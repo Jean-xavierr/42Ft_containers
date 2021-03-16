@@ -2,6 +2,8 @@
 #include <iostream>
 
 bool single_digit (const int& value) { return (value<13); }
+bool same_integral_part (double first, double second)
+{ return ( int(first)==int(second) ); }
 
 int			main(void)
 {
@@ -77,8 +79,43 @@ int			main(void)
 
 	// l2.remove_if(single_digit);
 	l2.unique();
-	std::cout << std::endl << "l2 remove: " << std::endl;
+	std::cout << std::endl << "l2 unique: " << std::endl;
 	for (it = l2.begin(); it != l2.end(); it++)
 		std::cout << *it << std::endl;
+	
+	l2.sort();
+	std::cout << std::endl << "l2 sort: " << std::endl;
+	for (it = l2.begin(); it != l2.end(); it++)
+		std::cout << *it << std::endl;
+	
+	l2.reverse();
+	std::cout << std::endl << "l2 reverse: " << std::endl;
+	for (it = l2.begin(); it != l2.end(); it++)
+		std::cout << *it << std::endl;
+
+	ft::list<int>	l7(l2);
+	l7.push_back(30);
+	std::cout << std::endl << "l7 : " << std::endl;
+	for (it = l7.begin(); it != l7.end(); it++)
+		std::cout << *it << std::endl;
+
+	ft::swap(l2, l7);
+	l2.sort();
+	l7.sort();
+	std::cout << std::endl << "l2 swap: " << std::endl;
+	for (it = l2.begin(); it != l2.end(); it++)
+		std::cout << *it << std::endl;
+	std::cout << std::endl << "l7 : " << std::endl;
+	for (it = l7.begin(); it != l7.end(); it++)
+		std::cout << *it << std::endl;
+
+	l2.merge(l7);
+	std::cout << std::endl << "l2 merge: " << std::endl;
+	for (it = l2.begin(); it != l2.end(); it++)
+		std::cout << *it << std::endl;
+	std::cout << std::endl << "l7 : " << std::endl;
+	for (it = l7.begin(); it != l7.end(); it++)
+		std::cout << *it << std::endl;
+	// std::cout << (l7 == l2) << std::endl;
 	return 0;
 }

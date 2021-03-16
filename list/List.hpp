@@ -6,7 +6,7 @@
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 11:46:10 by jereligi          #+#    #+#             */
-/*   Updated: 2021/03/15 16:57:42 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/03/16 16:18:18 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -389,7 +389,7 @@ namespace ft
 			_size++;
 		}
 
-		void splice(iterator position, list& x, iterator first, iterator last) 
+		void	splice(iterator position, list& x, iterator first, iterator last) 
 		{
 			while (first != last)
 				splice(position, x, first++);
@@ -442,18 +442,92 @@ namespace ft
 			}
 		}
 
-		// template <class BinaryPredicate>
-  		// void unique (BinaryPredicate binary_pred);
+		template <class BinaryPredicate>
+  		void unique (BinaryPredicate binary_pred)
+		{
+			iterator	elem = begin();
+			iterator	next = ++begin();
 
-		// void merge (list& x);
-		// template <class Compare>
-		// void merge (list& x, Compare comp);
+			while (next != end())
+			{
+				if (binary_pred(*next, *elem) == 1)
+				{
+					erase(next);
+					elem = begin();
+					next = ++begin();
+				}
+				else
+				{
+					elem = next;
+					++next;
+				}
+			}
+		}
 
-		// void sort();
-		// template <class Compare>
-		// void sort (Compare comp);
+		void merge (list& x) 
+		{
+			merge(x, _comp);
+		}
+		template <class Compare>
+		void merge (list& x, Compare comp)
+		{
+			iterator 	it_x = x.begin();
+			iterator 	it_this = begin();
 
-		// void reverse();
+			while (it_x != x.end() && it_this != end())
+			{
+				if (comp(*it_x, *it_this))
+					splice(it_this, x, it_x++);
+				else
+					it_this++;
+			}
+			while (it_x != x.end())
+				splice(end(), x, it_x++);
+		}
+
+		void sort()
+		{
+			sort(_comp);
+		}
+
+		template <class Compare>
+		void sort(Compare comp)
+		{
+			iterator	elem = begin();
+			iterator	next = ++begin();
+
+			while (next != end())
+			{
+				if (*elem != *next && comp(*elem, *next) == 0)
+				{
+					splice(elem, *this, next);
+					elem = begin();
+					next = ++begin();
+				}
+				else
+				{
+					elem = next;
+					next++;
+				}
+			}
+		}
+
+		void reverse()
+		{
+			Node<T>		*elem;
+			Node<T>		*tmp;
+			iterator	it = begin();
+
+			while (it != --end())
+			{
+				std::cout << *it << std::endl;
+				elem = it.operator->();
+				tmp = elem->prev;
+				elem->prev = elem->next;
+				elem->next = tmp;
+				it++;
+			}
+		}
 
 	private:
 
@@ -461,7 +535,46 @@ namespace ft
 		size_type		_size;
 		allocator_type	_alloc;	
 
+		static bool	_comp(T &x, T &y) { 
+			return (x < y); 
+		}
 	};
+
+	// template <class T, class Alloc>
+	// bool operator== (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs)
+	// {
+	// 	typename ft::list<T>::const_iterator		it_r = rhs.begin();
+	// 	typename ft::list<T>::const_iterator		it_l = lhs.begin();
+
+	// 	if (lhs.size() != rhs.size())
+	// 		return (false);
+	// 	while (it_l != lhs.end() && it_r != rhs.end() && *it_l == *it_r)
+	// 	{
+	// 		it_l++;
+	// 		it_r++;
+	// 	}
+	// 	return (it_l == lhs.end() && it_r == rhs.end());
+	// }
+	
+	// template <class T, class Alloc>
+	// bool operator!= (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs);
+	
+	// template <class T, class Alloc>
+	// bool operator<  (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs);
+	
+	// template <class T, class Alloc>
+	// bool operator<= (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs);
+	
+	// template <class T, class Alloc>
+	// bool operator>  (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs);
+	
+	// template <class T, class Alloc>
+
+	template <class T, class Alloc>
+	void swap (list<T,Alloc>& x, list<T,Alloc>& y) { 
+		x.swap(y); 
+	}
 }
+
 
 #endif
