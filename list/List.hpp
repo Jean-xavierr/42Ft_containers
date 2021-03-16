@@ -6,7 +6,7 @@
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 11:46:10 by jereligi          #+#    #+#             */
-/*   Updated: 2021/03/16 16:18:18 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/03/16 16:42:32 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -540,35 +540,79 @@ namespace ft
 		}
 	};
 
-	// template <class T, class Alloc>
-	// bool operator== (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs)
-	// {
-	// 	typename ft::list<T>::const_iterator		it_r = rhs.begin();
-	// 	typename ft::list<T>::const_iterator		it_l = lhs.begin();
+	template <class T, class Alloc>
+	bool operator== (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs)
+	{
+		typename ft::list<T>::const_iterator		it_r = rhs.begin();
+		typename ft::list<T>::const_iterator		it_l = lhs.begin();
 
-	// 	if (lhs.size() != rhs.size())
-	// 		return (false);
-	// 	while (it_l != lhs.end() && it_r != rhs.end() && *it_l == *it_r)
-	// 	{
-	// 		it_l++;
-	// 		it_r++;
-	// 	}
-	// 	return (it_l == lhs.end() && it_r == rhs.end());
-	// }
+		if (lhs.size() != rhs.size())
+			return (false);
+		while (it_l != lhs.end() && it_r != rhs.end() && *it_l == *it_r)
+		{
+			it_l++;
+			it_r++;
+		}
+		return (it_l == lhs.end() && it_r == rhs.end());
+	}
 	
-	// template <class T, class Alloc>
-	// bool operator!= (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs);
+	template <class T, class Alloc>
+	bool operator!= (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs)
+	{
+		return (!(lhs == rhs));
+	}
 	
-	// template <class T, class Alloc>
-	// bool operator<  (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs);
+	template <class T, class Alloc>
+	bool operator<  (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs)
+	{
+		typename ft::list<T>::const_iterator		it_r = rhs.begin();
+		typename ft::list<T>::const_iterator		it_l = lhs.begin();
+
+		if (lhs == rhs)
+			return (false);
+		while (it_l != lhs.end() && it_r != rhs.end() && *it_l == *it_r)
+		{
+			it_l++;
+			it_r++;
+		}
+		if (*it_l < *it_r)
+			return (true);
+		return (false);
+	}
 	
-	// template <class T, class Alloc>
-	// bool operator<= (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs);
+	template <class T, class Alloc>
+	bool operator<= (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs)
+	{
+		if (lhs == rhs)
+			return (true);
+		return (lhs < rhs);
+	}
 	
-	// template <class T, class Alloc>
-	// bool operator>  (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs);
+	template <class T, class Alloc>
+	bool operator>  (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs)
+	{
+		typename ft::list<T>::const_iterator		it_r = rhs.begin();
+		typename ft::list<T>::const_iterator		it_l = lhs.begin();
+
+		if (lhs == rhs)
+			return (false);
+		while (it_l != lhs.end() && it_r != rhs.end() && *it_l == *it_r)
+		{
+			it_l++;
+			it_r++;
+		}
+		if (*it_l > *it_r)
+			return (true);
+		return (false);
+	}
 	
-	// template <class T, class Alloc>
+	template <class T, class Alloc>
+	bool operator>= (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs)
+	{
+		if (lhs == rhs)
+			return (true);
+		return (lhs > rhs);
+	}
 
 	template <class T, class Alloc>
 	void swap (list<T,Alloc>& x, list<T,Alloc>& y) { 

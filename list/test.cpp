@@ -116,6 +116,21 @@ int			main(void)
 	std::cout << std::endl << "l7 : " << std::endl;
 	for (it = l7.begin(); it != l7.end(); it++)
 		std::cout << *it << std::endl;
-	// std::cout << (l7 == l2) << std::endl;
+
+	std::cout << (l7 == l2) << std::endl;
+
+	l2.clear();
+	l7.clear();
+	l2.push_back(2);
+	l2.push_back(4);
+	l2.push_back(6);
+	l7.push_back(2);
+	l7.push_back();
+	l7.push_back(6);
+	std::cout << "== : " << (l7 == l2) << std::endl;
+
+	std::cout << "< : " << (l2 < l7) << std::endl;
+
+	std::cout << "<= : " << (l2 <= l7) << std::endl;
 	return 0;
 }

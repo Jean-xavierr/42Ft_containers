@@ -6,7 +6,7 @@
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 16:07:03 by jereligi          #+#    #+#             */
-/*   Updated: 2021/03/10 14:50:08 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/03/16 16:27:26 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ namespace ft
 	public:
 		static const bool				is_iterator = true;
 
-		typedef T						value_type;
+		typedef const T					value_type;
 		typedef value_type&				reference;
 		typedef const value_type&		const_reference;
 		typedef value_type*				pointer;
@@ -35,13 +35,13 @@ namespace ft
 		*******************************************/
 		
 		const_iterator(void) {};
-		const_iterator(const T* src) { _node = src; };
+		const_iterator(const Node* src) { _node = src; };
 		const_iterator(Iterator<T, Node> const &src) { _node = src.operator->(); };
-		const_iterator(const_iterator const &src) { *this = src; } ;
+		const_iterator(const_iterator const &src) { _node = src._node; } ;
 		virtual ~const_iterator() {};
 
 		const_iterator &operator=(const_iterator const &src) {
-			_node = src.operator->(); 
+			_node = src._node; 
 			return (*this); 
 		};
 
@@ -89,17 +89,17 @@ namespace ft
 		*******************************************/
 
 		const_reference	operator*() const {
-			return (*_node); 
+			return (_node->val); 
 		};
-		const_pointer	operator->() {
+		Node* const	operator->() {
 			return (_node);
 		};
-		const_pointer	operator->() const {
+		Node* const	operator->() const {
 			return (_node); 
 		};											
 
 	private:
-		Node	*_node;
+		const Node	*_node;
 		
 	};
 }

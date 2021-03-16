@@ -6,7 +6,7 @@
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/25 11:06:31 by jereligi          #+#    #+#             */
-/*   Updated: 2021/03/10 14:20:00 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/03/16 16:33:43 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #define REVERSE_ITERATOR_HPP
 
 #include "../../utils.hpp"
+#include "iterator.hpp"
 
 namespace ft
 {
@@ -38,6 +39,7 @@ namespace ft
 		reverse_iterator(void) {};
 		reverse_iterator(Node* src) { _node = src; };
 		reverse_iterator(Iterator<T, Node> const &src) { *this = src; } ;
+		reverse_iterator(const reverse_iterator &src) { _node = src.operator->(); };
 		virtual ~reverse_iterator() {};
 
 		reverse_iterator &operator=(reverse_iterator const &src) {
