@@ -6,7 +6,7 @@
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 11:46:10 by jereligi          #+#    #+#             */
-/*   Updated: 2021/03/17 10:44:09 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/03/17 16:47:55 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ namespace ft
 			_node = new Node<T>;
 			_node->next = _node;
 			_node->prev = _node;
-			_node->val = 0;
+			// _node->val = 0;
 			_size = 0;
 			_alloc = alloc;
 		}
@@ -82,7 +82,7 @@ namespace ft
 			_node = new Node<T>;
 			_node->next = _node;
 			_node->prev = _node;
-			_node->val = 0;
+			// _node->val = 0;
 			_size = 0;
 			_alloc = alloc;
 			for (size_type i = 0; i < n; i++)
@@ -97,7 +97,7 @@ namespace ft
 			_node = new Node<T>;
 			_node->next = _node;
 			_node->prev = _node;
-			_node->val = 0;
+			// _node->val = 0;
 			_size = 0;
 			_alloc = alloc;
 			while (first != last)
@@ -108,12 +108,12 @@ namespace ft
 		}
 		
 		//copy	
-		list (list& x)
+		list (const list& x)
 		{	
 			_node = new Node<T>;
 			_node->next = _node;
 			_node->prev = _node;
-			_node->val = 0;
+			// _node->val = 0;
 			_size = 0;
 			_alloc = allocator_type();
 
@@ -126,10 +126,10 @@ namespace ft
 			delete _node;
 		}
 
-		list& operator=(list& x) 
+		list& operator=(const list& x) 
 		{
 			clear();
-			for (iterator it = x.begin(); it != x.end(); it++)
+			for (const_iterator it = x.begin(); it != x.end(); it++)
 				push_back(*it);
 			return (*this);
 		}
