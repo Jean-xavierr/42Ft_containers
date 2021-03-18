@@ -6,7 +6,7 @@
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 15:29:38 by jereligi          #+#    #+#             */
-/*   Updated: 2021/03/17 16:42:53 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/03/18 16:18:18 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 #include "test_essentials.cpp"
 #include "test_capacity.cpp"
 #include "test_iterator.cpp"
+#include "test_modifiers.cpp"
+#include "test_operations.cpp"
+#include "test_operator_non_member.cpp"
+
 
 void	next_test()
 {
@@ -31,5 +35,14 @@ int		main(void)
 	test_iterator();
 	test_operator_over_ite();
 	test_constructors();
+	test_modifiers_one();
+	test_modifiers_two();
+	test_operations_splice();
+	test_operations_remove();
+	test_operations_unique();
+	test_operations_sort();
+	test_operations_reverse();
+	test_non_member_ope();
+	test_operations_merge();
 	return (0);
 }

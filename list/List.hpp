@@ -6,7 +6,7 @@
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 11:46:10 by jereligi          #+#    #+#             */
-/*   Updated: 2021/03/17 16:47:55 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/03/18 15:58:23 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -520,7 +520,6 @@ namespace ft
 
 			while (it != --end())
 			{
-				std::cout << *it << std::endl;
 				elem = it.operator->();
 				tmp = elem->prev;
 				elem->prev = elem->next;
@@ -617,6 +616,16 @@ namespace ft
 	template <class T, class Alloc>
 	void swap (list<T,Alloc>& x, list<T,Alloc>& y) { 
 		x.swap(y); 
+	}
+
+	template < class T >
+	std::ostream& operator <<(std::ostream& s, ft::list<T>& lst) 
+	{
+		s << "{ ";
+		for (typename list<T>::const_iterator it = lst.begin(); it != lst.end(); it++)
+			s << *it << " ";
+		s << "}";
+		return s;
 	}
 }
 
