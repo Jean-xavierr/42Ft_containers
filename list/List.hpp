@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   List.hpp                                           :+:      :+:    :+:   */
+/*   list.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 11:46:10 by jereligi          #+#    #+#             */
-/*   Updated: 2021/03/18 15:58:23 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/03/19 13:59:30 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,6 @@ namespace ft
 		typedef typename ft::const_iterator<T, node_type>			const_iterator;
 		typedef typename ft::reverse_iterator<T, node_type>			reverse_iterator;
 		typedef typename ft::const_reverse_iterator<T, node_type>	const_reverse_iterator;
-
-		void				print_list()
-		{
-			Node<T>		*tmp = _node;
-
-			for (size_type i = 0; i < _size; i++)
-			{
-				tmp = tmp->next;
-				std::cout << tmp->val << std::endl;
-			}
-		}
 
 		/*******************************************
 		*****  Member Functions (Coplien Form) *****
@@ -121,7 +110,7 @@ namespace ft
 		}
 
 		//destructor
-		~list(){
+		virtual	~list(){
 			this->clear();
 			delete _node;
 		}
