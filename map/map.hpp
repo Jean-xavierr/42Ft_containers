@@ -6,7 +6,7 @@
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 11:46:10 by jereligi          #+#    #+#             */
-/*   Updated: 2021/03/19 14:27:28 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/03/22 16:02:04 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,86 @@
 #include "../utils.hpp"
 
 template <typename T>
-struct Node
+struct mapNode
 {
-	Node	*prev;
-	Node	*next;
-	T		val;
+	T			data;
+	mapNode		*parent;
+	mapNode		*left;
+	mapNode		*right;
 };
-
  
-// typedef pair<const Key, T> value_type;
 
 namespace ft
 {
-	// template < class Key,                                     // map::key_type
-    //        class T,                                       // map::mapped_type
-    //        class Compare = less<Key>,                     // map::key_compare
-    //        class Alloc = allocator<pair<const Key,T> >    // map::allocator_type
+	/*******************************************
+	*****         Class Pair               *****
+	*******************************************/	
+
+	template <typename Tkey, typename Tvalue>
+	class pair
+	{
+	public:
+
+		// default
+		pair(void) {};
+	
+		// copy
+		template<class U, class V>
+		pair (const pair<U,V>& pr)
+		{
+			this->first = pr.first;
+			this->second = pr.second;
+		};
+	
+		// initialization
+		pair (const Tkey& a, const Tvalue& b) : first(a), second(b) {};
+		~pair() {};
+		
+		pair &operator=(pair const &src)
+		{
+			this->first = src.first;
+			this->second = src.second;
+	
+			return (*this);
+		};
+
+		Tkey		first;
+		Tvalue		second;
+	};
+
+
+	/*******************************************
+	*****          Class Map               *****
+	*******************************************/
+
+	template <	class Tkey,														// map::key_type
+           		class Tvalue,													// map::mapped_type
+           		class Compare = std::less<Tkey>,								// map::key_compare
+           		class Alloc = std::allocator<pair<const Tkey,Tvalue> >			// map::allocator_type
+			>
 	class	map
 	{
 	public:
+
+		// member type
+		
+		typedef Tkey											key_type;
+		typedef Tvalue											mapped_type;
+		typedef ft::pair<key_type, mapped_type>					value_type;
+		typedef mapNode<value_type>								node_type;
+		typedef Compare											key_compare;
+		typedef std::allocator<value_type>						allocator_type;
+		typedef value_type &									reference;
+		typedef reference										const_reference;
+		typedef value_type *									pointer;
+		typedef const pointer									const_pointer;
+		// typedef mapIterator<>				iterator;
+		// typedef mapConstIterator<>			const_iterator;
+		// typedef mapReverseIterator<>		reverse_iterator;
+		// typedef mapConstReverseIterator<>	const_reverse_iterator;
+		typedef size_t											size_type;
+		typedef ptrdiff_t										difference_type;
+
 
 		/*******************************************
 		*****  Member Functions (Coplien Form) *****
@@ -77,7 +138,9 @@ namespace ft
 		*******************************************/
 
 		// bool empty() const;
-		// size_type size() const;
+		size_type size() const {
+			return (_size);
+		}
 		// size_type max_size() const;
 
 		/*******************************************
@@ -140,8 +203,16 @@ namespace ft
 		// pair<const_iterator,const_iterator> equal_range (const key_type& k) const;
 		
 		// pair<iterator,iterator>             equal_range (const key_type& k);
+	
+	private:
+	
+		mapNode<value_type>		*_map;
+		size_type				_size;
+		allocator_type			_alloc;
+		key_compare				_key_comp;
+
+	};
 
 }
-
 
 #endif
