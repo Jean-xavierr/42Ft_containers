@@ -6,7 +6,7 @@
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 11:46:10 by jereligi          #+#    #+#             */
-/*   Updated: 2021/03/22 16:02:04 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/03/23 16:40:16 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,30 @@
 #define MAP_HPP
 
 #include "../utils.hpp"
+#include "./iterator/mapIterator.hpp"
 
-template <typename T>
+template <typename Tpair>
 struct mapNode
 {
-	T			data;
+	Tpair		data;
 	mapNode		*parent;
 	mapNode		*left;
 	mapNode		*right;
 };
+
+template <typename T>
+mapNode<T>	*far_right(mapNode<T> *map_node) {
+	while (map_node->right != NULL)
+		map_node = map_node->right;
+	return (map_node);
+}
+
+template <typename T>
+mapNode<T>	*far_left(mapNode<T> *map_node) {
+	while (map_node->left != NULL)
+		map_node = map_node->left;
+	return (map_node);
+}
  
 
 namespace ft
@@ -41,10 +56,10 @@ namespace ft
 	
 		// copy
 		template<class U, class V>
-		pair (const pair<U,V>& pr)
+		pair (const pair<U,V>& src)
 		{
-			this->first = pr.first;
-			this->second = pr.second;
+			this->first = src.first;
+			this->second = src.second;
 		};
 	
 		// initialization
@@ -89,7 +104,7 @@ namespace ft
 		typedef reference										const_reference;
 		typedef value_type *									pointer;
 		typedef const pointer									const_pointer;
-		// typedef mapIterator<>				iterator;
+		typedef mapIterator<value_type, node_type>				iterator;
 		// typedef mapConstIterator<>			const_iterator;
 		// typedef mapReverseIterator<>		reverse_iterator;
 		// typedef mapConstReverseIterator<>	const_reverse_iterator;
@@ -102,7 +117,14 @@ namespace ft
 		*******************************************/
 
 		// // empty	
-		// explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type());
+		explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type())
+		{
+			_map = new node_type();
+			
+			_size = 0;
+			_alloc = alloc;
+			_key_comp = comp;
+		}
 		
 		// // range	
 		// template <class InputIterator>
@@ -111,9 +133,14 @@ namespace ft
 
 		// copy / assign
 		// map& operator= (const map& x);
+		// {
+
+		// }
 		
 		// // copy	
-		// map (const map& x);
+		map (const map& x){
+			*this = x;
+		}
 
 		// virtual		~map();
 
@@ -121,7 +148,16 @@ namespace ft
 		*****             Iterators            *****
 		*******************************************/
 
-		//iterator begin();
+		iterator begin()
+		{
+			iterator	tmp(_map);
+
+			std::cout << "_map : " << _map->data.first << std::endl;
+
+			// std::cout << tmp->first << std::endl;
+			return (tmp);
+		}
+
 		//const_iterator begin() const;
 		
 		//iterator end();
@@ -147,14 +183,39 @@ namespace ft
 		*****         Element access           *****
 		*******************************************/
 
-		// mapped_type& operator[] (const key_type& k);
+		mapped_type& operator[] (const key_type& k)
+		{
+			value_type		new_pair(k, mapped_type());
+			node_type		*new_node = new node_type();
+			
+			new_node->data = new_pair;
+			new_node->left = NULL;
+			new_node->parent = NULL;
+
+			if (_size == 0)
+			{
+				new_node->right = _map;
+				_map->parent = new_node;
+			}
+			_map = new_node;
+
+			std::cout << "key : " << new_node->data.first << std::endl;
+			std::cout << "value : " << new_node->data.second << std::endl;
+
+			_size++;
+			iterator	it = begin();
+			return(new_node->data.second);
+		}
 
 		/*******************************************
 		*****            Modifiers             *****
 		*******************************************/
 
 		// //single element	
-		// pair<iterator,bool> insert (const value_type& val);
+		// pair<iterator,bool> insert (const value_type& val)
+		// {
+		
+		// }
 		
 		// // with hint	
 		// iterator insert (iterator position, const value_type& val);
