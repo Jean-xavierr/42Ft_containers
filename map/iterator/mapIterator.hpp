@@ -6,7 +6,7 @@
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 15:52:21 by jereligi          #+#    #+#             */
-/*   Updated: 2021/03/24 16:29:58 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/03/24 17:01:38 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,10 @@ namespace ft
 			// 		_map = get_right(_map);
 			// 	_map = _map->parent;
 			// }
+
+			node_type	get_map(void) const {
+				return (_map);
+			};
 
 		private:
 		
