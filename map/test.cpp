@@ -3,24 +3,38 @@
 #include <map>
 #include <string>
 
+// (*it).first
+// it.operator->()->first
+
 int main ()
 {
 	ft::map<char, int>	*map = new ft::map<char, int>();
 
-	// ft::map<char, int>::iterator	it;
+	// map->operator[]('b');
 
-	std::cout << map->size() << std::endl;
-	map->operator[]('b');
+	map->insert(ft::pair<char, int>('c', 1));
+	map->insert(ft::pair<char, int>('a', 1));
+	map->insert(ft::pair<char, int>('d', 1));
+	ft::map<char, int>::iterator	it;
+
+	for (it = map->begin(); it != map->end(); it++)
+		std::cout << (*it).first << std::endl;
 
 
-	std::cout << "MAP" << std::endl;
+	// for (it = map->begin(); it != map->end(); it++)
+	// 	std::cout << "key : " << (*it).first << " | " << "val : " << (*it).second << std::endl;
 
-	std::map<char, int>	*m = new std::map<char, int>();
+	// std::map<char, int>	*map2 = new std::map<char, int>();
+	// map2->insert(std::pair<char, int>('a', 1));
+	// map2->insert(std::pair<char, int>('e', 2));
+	// map2->insert(std::pair<char, int>('c', 3));
+	// map2->insert(std::pair<char, int>('d', 4));
+	// map2->insert(std::pair<char, int>('f', 2));
+	// std::map<char, int>::iterator	it;
 
-	m->insert(std::pair<char,int>('a',100) );
-	std::map<char, int>::iterator	it = m->begin();
+	// for (it = map2->begin(); it != map2->end(); it++)
+	// 	std::cout << (*it).first << " " << (*it).second << std::endl;
 
-	std::cout << "it : " << it->first << std::endl;
 
   return 0;
 }

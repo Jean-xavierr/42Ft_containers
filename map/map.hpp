@@ -6,7 +6,7 @@
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 11:46:10 by jereligi          #+#    #+#             */
-/*   Updated: 2021/03/23 16:40:16 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/03/24 16:28:47 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,34 @@ struct mapNode
 };
 
 template <typename T>
-mapNode<T>	*far_right(mapNode<T> *map_node) {
-	while (map_node->right != NULL)
-		map_node = map_node->right;
-	return (map_node);
+mapNode<T>	*get_right(mapNode<T> *node) {
+	return (node->right);
 }
 
 template <typename T>
-mapNode<T>	*far_left(mapNode<T> *map_node) {
-	while (map_node->left != NULL)
-		map_node = map_node->left;
-	return (map_node);
+mapNode<T>	*get_left(mapNode<T> *node) {
+	return (node->left);
 }
- 
+
+template <typename T>
+mapNode<T>	*get_parent(mapNode<T> *node) {
+	return (node->parent);
+}
+
+template <typename T>
+mapNode<T>	*far_right(mapNode<T> *node) {
+	while (node->right != NULL)
+		node = node->right;
+	return (node);
+}
+
+template <typename T>
+mapNode<T>	*far_left(mapNode<T> *node) {
+	while (node->left != NULL)
+		node = node->left;
+	return (node);
+}
+
 
 namespace ft
 {
@@ -150,17 +165,19 @@ namespace ft
 
 		iterator begin()
 		{
-			iterator	tmp(_map);
+			iterator	tmp(far_left(_map));
 
-			std::cout << "_map : " << _map->data.first << std::endl;
-
-			// std::cout << tmp->first << std::endl;
 			return (tmp);
 		}
 
 		//const_iterator begin() const;
 		
-		//iterator end();
+		iterator end()
+		{
+			iterator	tmp(far_right(_map));
+
+			return (tmp);
+		}
 		//const_iterator end() const;
 
       	//reverse_iterator rbegin();
@@ -173,11 +190,19 @@ namespace ft
 		*****            Capacity              *****
 		*******************************************/
 
-		// bool empty() const;
+		bool empty() const {
+			if (_size > 0)
+				return (0);
+			return (1);
+		}
+		
 		size_type size() const {
 			return (_size);
 		}
-		// size_type max_size() const;
+
+		size_type max_size() const {
+			return (std::numeric_limits<difference_type>::max() / (sizeof(node_type) / 2 ?: 1));
+		}
 
 		/*******************************************
 		*****         Element access           *****
@@ -187,23 +212,29 @@ namespace ft
 		{
 			value_type		new_pair(k, mapped_type());
 			node_type		*new_node = new node_type();
+
+			value_type		new_pair2('x', mapped_type());
+			node_type		*new_node2 = new node_type();
+			
+			node_type		*tmp = _map;
 			
 			new_node->data = new_pair;
 			new_node->left = NULL;
 			new_node->parent = NULL;
+			new_node->right = tmp;
 
-			if (_size == 0)
-			{
-				new_node->right = _map;
-				_map->parent = new_node;
-			}
 			_map = new_node;
+			tmp->parent = new_node;
 
-			std::cout << "key : " << new_node->data.first << std::endl;
-			std::cout << "value : " << new_node->data.second << std::endl;
 
-			_size++;
-			iterator	it = begin();
+			new_node2->data = new_pair2;
+			new_node2->left = NULL;
+			new_node2->parent = _map;
+			new_node2->right = far_right(_map);
+
+			_map->right = new_node2;
+
+			
 			return(new_node->data.second);
 		}
 
@@ -211,11 +242,25 @@ namespace ft
 		*****            Modifiers             *****
 		*******************************************/
 
-		// //single element	
-		// pair<iterator,bool> insert (const value_type& val)
-		// {
-		
-		// }
+		//single element	
+		pair<iterator,bool> insert (const value_type& val)
+		{
+			// if (_size > 0 && _find_node(val)->data == val)
+			// 	return (pair<iterator, bool>(this->end(), false));
+			
+			value_type		new_pair(val);
+			node_type		*new_node = new node_type();
+
+			new_node->data = new_pair;
+			new_node->left = NULL;
+			new_node->right = NULL;
+			new_node->parent = NULL;
+
+			std::cout << "new_pair : " << new_node->data.first << std::endl;
+
+			_bthree_add(new_node);
+			return (pair<iterator, bool>(this->end(), false));
+		}
 		
 		// // with hint	
 		// iterator insert (iterator position, const value_type& val);
@@ -264,13 +309,30 @@ namespace ft
 		// pair<const_iterator,const_iterator> equal_range (const key_type& k) const;
 		
 		// pair<iterator,iterator>             equal_range (const key_type& k);
-	
+
 	private:
 	
 		mapNode<value_type>		*_map;
 		size_type				_size;
 		allocator_type			_alloc;
 		key_compare				_key_comp;
+
+		// node_type	_find_node(const value_type& val)
+		// {
+		// 	iterator	it;
+
+		// 	for (it = begin(); it != end(); it++)
+		// 	{
+		// 		if ((*it).first == val.first)
+		// 			break;
+		// 	}
+		// 	return (it.operator->());
+		// }
+
+		// void		_bthree_add(node_type *new_node)
+		// {
+
+		// }
 
 	};
 
