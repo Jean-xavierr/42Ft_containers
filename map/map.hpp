@@ -6,7 +6,7 @@
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 11:46:10 by jereligi          #+#    #+#             */
-/*   Updated: 2021/03/24 16:28:47 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/04/01 17:00:55 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 #include "../utils.hpp"
 #include "./iterator/mapIterator.hpp"
+#include "./iterator/mapConstIterator.hpp"
+#include "./iterator/mapReverseIterator.hpp"
+#include "./iterator/mapConstReverseIterator.hpp"
 
 template <typename Tpair>
 struct mapNode
@@ -120,9 +123,9 @@ namespace ft
 		typedef value_type *									pointer;
 		typedef const pointer									const_pointer;
 		typedef mapIterator<value_type, node_type>				iterator;
-		// typedef mapConstIterator<>			const_iterator;
-		// typedef mapReverseIterator<>		reverse_iterator;
-		// typedef mapConstReverseIterator<>	const_reverse_iterator;
+		typedef mapConstIterator<value_type, node_type>			const_iterator;
+		typedef mapReverseIterator<value_type, node_type>		reverse_iterator;
+		typedef mapConstReverseIterator<value_type, node_type>	const_reverse_iterator;
 		typedef size_t											size_type;
 		typedef ptrdiff_t										difference_type;
 
@@ -135,6 +138,9 @@ namespace ft
 		explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type())
 		{
 			_map = new node_type();
+			_map->left = NULL;
+			_map->right = NULL;
+			_map->parent = NULL;
 			
 			_size = 0;
 			_alloc = alloc;
@@ -157,34 +163,46 @@ namespace ft
 			*this = x;
 		}
 
-		// virtual		~map();
+		virtual		~map()
+		{
+			if (empty() == 0)
+				clear();
+		}
 
 		/*******************************************
 		*****             Iterators            *****
 		*******************************************/
 
-		iterator begin()
-		{
-			iterator	tmp(far_left(_map));
-
-			return (tmp);
+		iterator begin() {
+			return (iterator(far_left(_map)));
 		}
 
-		//const_iterator begin() const;
+		const_iterator begin() const {
+			return (const_iterator(far_left(_map)));	
+		}
 		
-		iterator end()
-		{
-			iterator	tmp(far_right(_map));
-
-			return (tmp);
+		iterator end() {
+			return (iterator(far_right(_map)));
 		}
-		//const_iterator end() const;
 
-      	//reverse_iterator rbegin();
-		//const_reverse_iterator rbegin() const;
+		const_iterator end() const {
+			return (const_iterator(far_right(_map)));
+		}
 
-		// reverse_iterator rend();
-		// const_reverse_iterator rend() const;
+      	reverse_iterator rbegin() {
+			return (reverse_iterator(end()));
+		}
+
+		const_reverse_iterator rbegin() const {
+			return (const_reverse_iterator(end()));
+		}
+
+		reverse_iterator rend() {
+			return (reverse_iterator(begin()));
+		}
+		const_reverse_iterator rend() const {
+			return (const_reverse_iterator(begin()));
+		}
 
 		/*******************************************
 		*****            Capacity              *****
@@ -210,32 +228,7 @@ namespace ft
 
 		mapped_type& operator[] (const key_type& k)
 		{
-			value_type		new_pair(k, mapped_type());
-			node_type		*new_node = new node_type();
-
-			value_type		new_pair2('x', mapped_type());
-			node_type		*new_node2 = new node_type();
-			
-			node_type		*tmp = _map;
-			
-			new_node->data = new_pair;
-			new_node->left = NULL;
-			new_node->parent = NULL;
-			new_node->right = tmp;
-
-			_map = new_node;
-			tmp->parent = new_node;
-
-
-			new_node2->data = new_pair2;
-			new_node2->left = NULL;
-			new_node2->parent = _map;
-			new_node2->right = far_right(_map);
-
-			_map->right = new_node2;
-
-			
-			return(new_node->data.second);
+			return ((insert(value_type(k, mapped_type()))).first->second);
 		}
 
 		/*******************************************
@@ -245,8 +238,13 @@ namespace ft
 		//single element	
 		pair<iterator,bool> insert (const value_type& val)
 		{
-			// if (_size > 0 && _find_node(val)->data == val)
-			// 	return (pair<iterator, bool>(this->end(), false));
+			ft::pair<iterator, bool> ret;
+
+			if (_size > 0 && (count(val.first)) == 1)
+			{
+				ret.second = false;
+				return (ret);
+			}
 			
 			value_type		new_pair(val);
 			node_type		*new_node = new node_type();
@@ -256,18 +254,29 @@ namespace ft
 			new_node->right = NULL;
 			new_node->parent = NULL;
 
-			std::cout << "new_pair : " << new_node->data.first << std::endl;
-
-			_bthree_add(new_node);
-			return (pair<iterator, bool>(this->end(), false));
+			_btree_add(new_node);
+			ret.first = find(val.first);
+			return (ret);
 		}
 		
 		// // with hint	
-		// iterator insert (iterator position, const value_type& val);
+		iterator insert (iterator position, const value_type& val)
+		{
+			static_cast<void>(position);
+			return (insert(val).first);
+		}
 
 		// //range	
-		// template <class InputIterator>
-  		// void insert (InputIterator first, InputIterator last);
+		template <class InputIterator>
+  		void insert (InputIterator first, InputIterator last,
+		typename ft::enable_if<InputIterator::is_iterator, InputIterator>::type = NULL)
+		{
+			while (first != last)
+			{
+				insert(*first);
+				first++;
+			}
+		}
 
 	
 		// void erase (iterator position);
@@ -278,7 +287,17 @@ namespace ft
 
 		// void swap (map& x);
 
-		// void clear();
+		void clear() 
+		{
+			node_type *sentinel = far_right(_map);
+
+			if (_size == 0)
+				return ;
+			sentinel->parent->right = NULL;
+			_btree_clear(_map);
+			_map = sentinel;
+			_size = 0;
+		}
 
 		/*******************************************
 		*****           Observers              *****
@@ -292,11 +311,51 @@ namespace ft
 		*****        Map operations            *****
 		*******************************************/
 
-		//iterator find (const key_type& k);
-		
-		//const_iterator find (const key_type& k) const;
+		iterator find (const key_type& k) 
+		{
+			iterator 	it = begin();
+			iterator	ite = end();
 
-		// size_type count (const key_type& k) const;
+			while (it != ite)
+			{
+				if (!_key_comp((*it).first, k) && !_key_comp(k, (*it).first))
+					break ;
+				it++;
+			}
+			return (it);
+		}
+		
+		const_iterator find (const key_type& k) const 
+		{
+			const_iterator 	it = begin();
+			const_iterator	ite = end();
+
+			while (it != ite)
+			{
+				if (!_key_comp((*it).first, k) && !_key_comp(k, (*it).first))
+					break ;
+				it++;
+			}
+			return (it);
+		}
+
+		size_type count (const key_type& k) const 
+		{
+			size_t			ret = 0;
+			const_iterator 	it = begin();
+			const_iterator	ite = end();
+
+			while (it != ite)
+			{
+				if (!_key_comp((*it).first, k) && !_key_comp(k, (*it).first))
+				{
+					ret++;
+					break ;
+				}
+				it++;
+			}
+			return (ret);
+		}
 
 		// iterator lower_bound (const key_type& k);
 
@@ -317,25 +376,44 @@ namespace ft
 		allocator_type			_alloc;
 		key_compare				_key_comp;
 
-		// node_type	_find_node(const value_type& val)
-		// {
-		// 	iterator	it;
+		void		_btree_add(node_type *new_node)
+		{
+			node_type	**parent = &_map;
+			node_type	**node = &_map;
+			node_type	*sentinel = far_right(_map);
+			bool		side_left = -1;
+			
+			while (*node && *node != sentinel)
+			{
+				parent = node;
+				side_left = _key_comp(new_node->data.first, (*node)->data.first);
+				node = (side_left ? &(*node)->left : &(*node)->right);
+			}
+			if (*node == NULL) 
+			{
+				new_node->parent = (*parent);
+				*node = new_node;
+			}
+			else // if (*node == sentinel)
+			{
+				*node = new_node;
+				new_node->parent = sentinel->parent;
+				sentinel->parent = far_right(new_node);
+				far_right(new_node)->right = sentinel;
+			}
+			_size++;
+		};
 
-		// 	for (it = begin(); it != end(); it++)
-		// 	{
-		// 		if ((*it).first == val.first)
-		// 			break;
-		// 	}
-		// 	return (it.operator->());
-		// }
-
-		// void		_bthree_add(node_type *new_node)
-		// {
-
-		// }
-
+		void		_btree_clear(node_type	*node)
+		{
+			if (node == NULL)
+				return ;
+			_btree_clear(node->left);
+			_btree_clear(node->right);
+			delete node;
+		};
+		
 	};
-
 }
 
 #endif

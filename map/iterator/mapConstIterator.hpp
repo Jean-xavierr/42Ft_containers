@@ -6,7 +6,7 @@
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 16:31:36 by jereligi          #+#    #+#             */
-/*   Updated: 2021/03/24 17:01:13 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/04/01 16:11:56 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,11 @@ namespace ft
 					node_type	*child = _map;
 
 					_map = _map->parent;
-					if (_map->right == child)
+					while (_map->right == child)
+					{
+						child = _map;
 						_map = _map->parent;
+					}
 				}
 				return (*this);
 			};
@@ -108,8 +111,11 @@ namespace ft
 					node_type	*child = _map;
 
 					_map = _map->parent;
-					if (_map->left == child)
+					while (_map->right == child)
+					{
+						child = _map;
 						_map = _map->parent;
+					}
 				}
 				return (*this);
 			};
