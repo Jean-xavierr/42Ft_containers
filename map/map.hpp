@@ -6,7 +6,7 @@
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 11:46:10 by jereligi          #+#    #+#             */
-/*   Updated: 2021/04/01 17:02:43 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/04/02 16:59:16 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ namespace ft
 		*****  Member Functions (Coplien Form) *****
 		*******************************************/
 
-		// // empty	
+		// empty	
 		explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type())
 		{
 			_map = new node_type();
@@ -147,16 +147,33 @@ namespace ft
 			_key_comp = comp;
 		}
 		
-		// // range	
-		// template <class InputIterator>
-		// map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(),
-       	// const allocator_type& alloc = allocator_type());
+		// range	
+		template <class InputIterator>
+		map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(),
+       	const allocator_type& alloc = allocator_type(),
+		typename ft::enable_if<InputIterator::is_iterator, InputIterator>::type = NULL)
+		{
+			_map = new node_type();
+			_map->left = NULL;
+			_map->right = NULL;
+			_map->parent = NULL;
+			
+			_size = 0;
+			_alloc = alloc;
+			_key_comp = comp;
+			insert(first, last);
+		}
 
 		// copy / assign
-		// map& operator= (const map& x);
-		// {
-
-		// }
+		map& operator= (const map& x)
+		{
+			if (this == x)
+				return (*this);
+			if (empty() == 0)
+				clear();
+			insert(x.begin(), x.end());
+			return (*this);
+		}
 		
 		// // copy	
 		map (const map& x){
@@ -259,14 +276,14 @@ namespace ft
 			return (ret);
 		}
 		
-		// // with hint	
+		// with hint	
 		iterator insert (iterator position, const value_type& val)
 		{
 			static_cast<void>(position);
 			return (insert(val).first);
 		}
 
-		// //range	
+		//range	
 		template <class InputIterator>
   		void insert (InputIterator first, InputIterator last,
 		typename ft::enable_if<InputIterator::is_iterator, InputIterator>::type = NULL)
@@ -279,13 +296,121 @@ namespace ft
 		}
 
 	
-		// void erase (iterator position);
+		void erase (iterator position) {
+			erase((*position).first);
+		}
 
-		// size_type erase (const key_type& k);
+		size_type erase (const key_type& k) 
+		{
+			iterator it = find(k);
+			
+			node_type	*node_rm = it.get_map();
+			node_type	**parent = &node_rm->parent;
+			node_type	*child;
+			node_type	*node_replace;
 
-		// void erase (iterator first, iterator last);
+			// ----------------- No child -----------------------
+			if (node_rm->left == NULL && node_rm->right == NULL)
+			{
+				// std::cout << "No child" << std::endl;
+				if ((*parent)->left == node_rm)
+					(*parent)->left = NULL;
+				else
+					(*parent)->right = NULL;
+				delete node_rm;
+			}
 
-		// void swap (map& x);
+			// ----------------- One child ----------------------
+			else if (node_rm->left == NULL || node_rm->right == NULL)
+			{
+				// std::cout << "One child" << std::endl;
+				if (node_rm->left)
+					child = node_rm->left;
+				else
+					child = node_rm->right;
+				child->parent = *parent;
+				if (node_rm->parent)
+				{
+					if ((*parent)->left == node_rm)
+						(*parent)->left = child;
+					else
+						(*parent)->right = child;
+				}
+				else
+				{
+					_map = child;
+				}
+				delete node_rm;
+			}
+			
+			// ----------------- Two child ---------------------
+			else
+			{
+				// std::cout << "Two child" << std::endl;
+				node_replace = node_rm->right;
+				
+				while (node_replace->left)
+					node_replace = node_replace->left;
+
+				if (node_replace == node_rm->right) // no under child
+				{
+					node_replace->parent = node_rm->parent;
+					node_replace->left = node_rm->left;
+					node_rm->left->parent = node_replace;
+					if (node_rm->parent)
+					{
+						if ((*parent)->left == node_rm)
+							(*parent)->left = node_replace;
+						else
+							(*parent)->right = node_replace;
+					}
+					else
+					{
+						_map = node_replace;
+					}
+				}
+				else // under child
+				{
+					// std::cout << "Under child" << std::endl;
+					node_replace->parent->left = node_replace->right;
+					node_replace->right->parent = node_replace->parent;
+					node_replace->right = node_rm->right;
+					node_replace->right->parent = node_replace;
+					node_replace->parent = node_rm->parent;
+					node_replace->left = node_rm->left;
+					node_replace->left->parent = node_replace;
+					if (node_rm->parent)
+					{
+						if ((*parent)->left == node_rm)
+							(*parent)->left = node_replace;
+						else
+							(*parent)->right = node_replace;
+					}
+					else
+					{
+						_map = node_replace;
+					}
+				}
+				delete node_rm;
+				_size--;
+			}
+			return (1);
+		}
+
+		void erase (iterator first, iterator last)
+		{
+			while (first != last)
+				erase(first++);
+		}
+
+		void swap (map& x)
+		{
+			map		tmp;
+
+			tmp._copy_data(x);
+			x._copy_data(*this);
+			this->_copy_data(tmp);
+		}
 
 		void clear() 
 		{
@@ -303,9 +428,31 @@ namespace ft
 		*****           Observers              *****
 		*******************************************/
 
-		// key_compare key_comp() const;
+		key_compare key_comp() const {
+			return (key_compare());
+		}
 
-		// value_compare value_comp() const;
+		class	value_compare
+		{
+			public:
+				typedef bool result_type;
+				typedef value_type first_argument_type;
+				typedef value_type second_argument_type;
+
+				Compare comp;
+
+				value_compare(Compare c) : comp(c) {};
+				virtual ~value_compare() {};
+
+				bool operator() (const value_type& x, const value_type& y) const
+				{
+					return (comp(x.first, y.first));
+				}
+		};
+
+		value_compare value_comp() const {
+			return (value_compare(key_compare()));
+		}
 		
 		/*******************************************
 		*****        Map operations            *****
@@ -357,17 +504,79 @@ namespace ft
 			return (ret);
 		}
 
-		// iterator lower_bound (const key_type& k);
+		iterator lower_bound (const key_type& k) 
+		{
+			iterator	it = begin();
+			iterator	ite = end();
 
-		// const_iterator lower_bound (const key_type& k) const;
+			while (it != ite)
+			{
+				if (!_key_comp(it.first, k))
+					break ;
+				it++;
+			}
+			return (it);
+		}
 
-		// iterator upper_bound (const key_type& k);
+		const_iterator lower_bound (const key_type& k) const
+		{
+			const_iterator	it = begin();
+			const_iterator	ite = end();
+
+			while (it != ite)
+			{
+				if (!_key_comp(it.first, k))
+					break ;
+				it++;
+			}
+			return (it);
+		}
+
+		iterator upper_bound (const key_type& k)
+		{
+			iterator	it = begin();
+			iterator	ite = end();
+
+			while (it != ite)
+			{
+				if (!_key_comp(k, it.first))
+					break ;
+				it++;
+			}
+			return (it);
+		}
 		
-		// const_iterator upper_bound (const key_type& k) const;
+		const_iterator upper_bound (const key_type& k) const
+		{
+			const_iterator	it = begin();
+			const_iterator	ite = end();
 
-		// pair<const_iterator,const_iterator> equal_range (const key_type& k) const;
+			while (it != ite)
+			{
+				if (!_key_comp(k, it.first))
+					break ;
+				it++;
+			}
+			return (it);
+		}
+
+		pair<const_iterator,const_iterator> equal_range (const key_type& k) const
+		{
+			pair <const_iterator, const_iterator>	ret;
+
+			ret->first = lower_bound(k);
+			ret->second = upper_bound(k);
+			return (ret);
+		}
 		
-		// pair<iterator,iterator>             equal_range (const key_type& k);
+		pair<iterator,iterator>             equal_range (const key_type& k) 
+		{
+			pair <iterator, iterator>	ret;
+
+			ret->first = lower_bound(k);
+			ret->second = upper_bound(k);
+			return (ret);
+		}
 
 	private:
 	
@@ -412,6 +621,16 @@ namespace ft
 			_btree_clear(node->right);
 			delete node;
 		};
+
+		void		_copy_data(map &src)
+		{
+			clear();
+
+			_map = src->_map;
+			_size = src->_size;
+			_alloc = src->_alloc;
+			_key_comp = src->_key_comp;
+		}
 		
 	};
 }
