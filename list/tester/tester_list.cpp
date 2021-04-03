@@ -6,7 +6,7 @@
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 15:29:38 by jereligi          #+#    #+#             */
-/*   Updated: 2021/03/18 16:18:18 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/04/03 15:00:53 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "test_modifiers.cpp"
 #include "test_operations.cpp"
 #include "test_operator_non_member.cpp"
-
+#include <cmath>
 
 void	next_test()
 {

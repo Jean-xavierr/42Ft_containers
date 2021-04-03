@@ -6,7 +6,7 @@
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 16:07:03 by jereligi          #+#    #+#             */
-/*   Updated: 2021/03/16 16:27:26 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/04/03 14:59:22 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,10 @@ namespace ft
 		const_reference	operator*() const {
 			return (_node->val); 
 		};
-		Node* const	operator->() {
-			return (_node);
-		};
-		Node* const	operator->() const {
+		// Node* const	operator->() {
+		// 	return (_node);
+		// };
+		const Node* 	operator->() const {
 			return (_node); 
 		};											
 
