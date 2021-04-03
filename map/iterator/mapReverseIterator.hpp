@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mapReverseIterator.hpp                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Jeanxavier <Jeanxavier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 16:42:15 by jereligi          #+#    #+#             */
-/*   Updated: 2021/04/02 22:08:19 by Jeanxavier       ###   ########.fr       */
+/*   Updated: 2021/04/03 11:48:21 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ namespace ft
 					node_type	*child = _map;
 
 					_map = _map->parent;
-					while (_map->right == child)
+					while (_map && child == _map->left)
 					{
 						child = _map;
 						_map = _map->parent;

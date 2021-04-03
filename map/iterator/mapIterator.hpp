@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mapIterator.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Jeanxavier <Jeanxavier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 15:52:21 by jereligi          #+#    #+#             */
-/*   Updated: 2021/04/02 21:56:49 by Jeanxavier       ###   ########.fr       */
+/*   Updated: 2021/04/03 11:47:39 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ namespace ft
 					node_type	*child = _map;
 
 					_map = _map->parent;
-					while (_map->right == child)
+					while (_map && child == _map->left)
 					{
 						child = _map;
 						_map = _map->parent;
