@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Jeanxavier <Jeanxavier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 11:46:10 by jereligi          #+#    #+#             */
-/*   Updated: 2021/04/02 16:59:16 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/04/02 23:12:14 by Jeanxavier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,14 @@
 template <typename Tpair>
 struct mapNode
 {
+	private:
+	bool _unused;
+	#if __APPLE__ == 0
+		int _unused_for_linux;
+	#endif
+
+	public:
+
 	Tpair		data;
 	mapNode		*parent;
 	mapNode		*left;
@@ -57,9 +65,30 @@ mapNode<T>	*far_left(mapNode<T> *node) {
 	return (node);
 }
 
+template <typename Tpair>
+std::ostream	&operator<<(std::ostream &o, mapNode<Tpair> const &i)
+{
+	std::cout << \
+	"curr = " << i.get_curr() << std::endl << \
+	"_top = " << i.get_top() << std::endl << \
+	"_left = " << i.get_left() << std::endl << \
+	"_right = " << i.get_right() << std::endl << \
+	"_keyval : " << std::endl << i.get_pair();
+	return (o);
+};
+
 
 namespace ft
 {
+	template< class T >
+	struct less
+	{
+		bool operator()( const T& lhs, const T& rhs ) const
+		{
+			return lhs < rhs;
+		}
+	};
+
 	/*******************************************
 	*****         Class Pair               *****
 	*******************************************/	
@@ -96,6 +125,44 @@ namespace ft
 		Tvalue		second;
 	};
 
+	template <typename Tkey, typename Tvalue>
+	std::ostream	&operator<<(std::ostream &o, pair<Tkey, Tvalue> const &i)
+	{
+		std::cout << \
+		"key = " << i.first << ", value = " << i.second << " ";
+		return (o);
+	};
+
+	template <class T1, class T2>
+	bool operator==(const pair<T1, T2> &lhs, const pair<T1, T2> &rhs) {
+		return (lhs.first == rhs.first && lhs.second == rhs.second);
+	}
+	
+	template <class T1, class T2>
+	bool operator!=(const pair<T1, T2> &lhs, const pair<T1, T2> &rhs) {
+		return !(lhs == rhs);
+	}
+	
+	template <class T1, class T2>
+	bool operator< (const pair<T1, T2> &lhs, const pair<T1, T2> &rhs) {
+		return lhs.first < rhs.first || (!(rhs.first < lhs.first) && lhs.second < rhs.second);
+	}
+	
+	template <class T1, class T2>
+	bool operator<=(const pair<T1, T2> &lhs, const pair<T1, T2> &rhs) {
+		return !(rhs < lhs);
+	}
+	
+	template <class T1, class T2>
+	bool operator> (const pair<T1, T2> &lhs, const pair<T1, T2> &rhs) {
+		return (rhs < lhs);
+	}
+	
+	template <class T1, class T2>
+	bool operator>=(const pair<T1, T2> &lhs, const pair<T1, T2> &rhs) {
+		return !(lhs < rhs);
+	}
+
 
 	/*******************************************
 	*****          Class Map               *****
@@ -103,7 +170,7 @@ namespace ft
 
 	template <	class Tkey,														// map::key_type
            		class Tvalue,													// map::mapped_type
-           		class Compare = std::less<Tkey>,								// map::key_compare
+           		class Compare = ft::less<Tkey>,								// map::key_compare
            		class Alloc = std::allocator<pair<const Tkey,Tvalue> >			// map::allocator_type
 			>
 	class	map
@@ -165,18 +232,21 @@ namespace ft
 		}
 
 		// copy / assign
-		map& operator= (const map& x)
+		map& operator=(map const & x)
 		{
-			if (this == x)
-				return (*this);
 			if (empty() == 0)
 				clear();
-			insert(x.begin(), x.end());
+			if (x.size() > 0)
+				insert(x.begin(), x.end());
 			return (*this);
 		}
 		
 		// // copy	
 		map (const map& x){
+			_map = NULL;
+			_size = 0;
+			_alloc = allocator_type();
+			_key_comp = key_compare();
 			*this = x;
 		}
 
@@ -243,8 +313,11 @@ namespace ft
 		*****         Element access           *****
 		*******************************************/
 
-		mapped_type& operator[] (const key_type& k)
+		mapped_type& operator[](const key_type& k)
 		{
+			iterator	it = find(k);
+			if (it != end())
+				return ((*it).second);
 			return ((insert(value_type(k, mapped_type()))).first->second);
 		}
 
@@ -285,7 +358,7 @@ namespace ft
 
 		//range	
 		template <class InputIterator>
-  		void insert (InputIterator first, InputIterator last,
+		void insert (InputIterator first, InputIterator last,
 		typename ft::enable_if<InputIterator::is_iterator, InputIterator>::type = NULL)
 		{
 			while (first != last)
@@ -511,7 +584,7 @@ namespace ft
 
 			while (it != ite)
 			{
-				if (!_key_comp(it.first, k))
+				if (!_key_comp((*it).first, k))
 					break ;
 				it++;
 			}
@@ -525,7 +598,7 @@ namespace ft
 
 			while (it != ite)
 			{
-				if (!_key_comp(it.first, k))
+				if (!_key_comp((*it).first, k))
 					break ;
 				it++;
 			}
@@ -539,7 +612,7 @@ namespace ft
 
 			while (it != ite)
 			{
-				if (!_key_comp(k, it.first))
+				if (!_key_comp(k, (*it).first))
 					break ;
 				it++;
 			}
@@ -553,7 +626,7 @@ namespace ft
 
 			while (it != ite)
 			{
-				if (!_key_comp(k, it.first))
+				if (!_key_comp(k, (*it).first))
 					break ;
 				it++;
 			}
@@ -564,8 +637,8 @@ namespace ft
 		{
 			pair <const_iterator, const_iterator>	ret;
 
-			ret->first = lower_bound(k);
-			ret->second = upper_bound(k);
+			ret.first = lower_bound(k);
+			ret.second = upper_bound(k);
 			return (ret);
 		}
 		
@@ -573,8 +646,8 @@ namespace ft
 		{
 			pair <iterator, iterator>	ret;
 
-			ret->first = lower_bound(k);
-			ret->second = upper_bound(k);
+			ret.first = lower_bound(k);
+			ret.second = upper_bound(k);
 			return (ret);
 		}
 
@@ -626,12 +699,11 @@ namespace ft
 		{
 			clear();
 
-			_map = src->_map;
-			_size = src->_size;
-			_alloc = src->_alloc;
-			_key_comp = src->_key_comp;
+			_map = src._map;
+			_size = src._size;
+			_alloc = src._alloc;
+			_key_comp = src._key_comp;
 		}
-		
 	};
 }
 

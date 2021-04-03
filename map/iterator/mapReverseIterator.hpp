@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mapReverseIterator.hpp                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Jeanxavier <Jeanxavier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 16:42:15 by jereligi          #+#    #+#             */
-/*   Updated: 2021/04/01 16:53:24 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/04/02 22:08:19 by Jeanxavier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ namespace ft
 	class	mapReverseIterator
 	{
 		public:
+			static const bool				is_iterator = true;
 
 			typedef T						value_type;
 			typedef const value_type&		const_reference;
@@ -63,7 +64,7 @@ namespace ft
 			*******************************************/
 
 			bool operator ==(mapReverseIterator const& src) const {
-				return (_map == src.map);
+				return (_map == src._map);
 			};
 
 			bool operator !=(mapReverseIterator const& src) const {

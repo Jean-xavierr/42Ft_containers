@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mapIterator.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Jeanxavier <Jeanxavier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 15:52:21 by jereligi          #+#    #+#             */
-/*   Updated: 2021/04/01 16:11:47 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/04/02 21:56:49 by Jeanxavier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ namespace ft
 	class	mapIterator
 	{
 		public:
+			static const bool				is_iterator = true;
 
 			typedef T						value_type;
 			typedef const value_type&		const_reference;
@@ -58,7 +59,7 @@ namespace ft
 			*******************************************/
 
 			bool operator ==(mapIterator const& src) const {
-				return (_map == src.map);
+				return (_map == src._map);
 			};
 
 			bool operator !=(mapIterator const& src) const {
