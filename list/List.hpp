@@ -6,7 +6,7 @@
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 11:46:10 by jereligi          #+#    #+#             */
-/*   Updated: 2021/04/03 15:04:57 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/04/03 15:29:10 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include "./iterator/reverse_iterator.hpp"
 #include "./iterator/const_reverse_iterator.hpp"
 #include <algorithm>
+#include <limits>
 
 template <typename T>
 struct Node

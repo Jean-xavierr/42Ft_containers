@@ -6,7 +6,7 @@
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 13:45:22 by jereligi          #+#    #+#             */
-/*   Updated: 2021/03/18 16:19:56 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/04/03 15:29:20 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -629,7 +629,7 @@ bool same_integral_part (double first, double second)
 // a binary predicate implemented as a class:
 struct is_near {
   bool operator() (double first, double second)
-  { return (fabs(first-second)<5.0); }
+  { return (abs(first-second)<5.0); }
 };
 
 static void	test_operations_unique_std(void)
