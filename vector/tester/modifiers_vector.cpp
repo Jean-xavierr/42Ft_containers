@@ -6,7 +6,7 @@
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 11:36:28 by jereligi          #+#    #+#             */
-/*   Updated: 2021/03/08 12:17:31 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/04/03 14:03:22 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,18 +100,18 @@ void	ft_modifiers_vector()
 		else
 			std::cout << "}" << COLOR_RESET << std::endl << std::endl;
 	}
-	it = vec.begin();
-	vec.insert(it, it + 2, it + 4);
-	std::cout << "vec.insert(it, it + 4, it + 6);" << std::endl;
-	std::cout << COLOR_YELLOW << "vector {";
-	for (size_t i = 0; i < vec.size(); i++)
-	{
-		std::cout << vec[i];
-		if (i + 1 != vec.size())
-			std::cout << ", ";
-		else
-			std::cout << "}" << COLOR_RESET << std::endl << std::endl;
-	}
+	// it = vec.begin();
+	// vec.insert(it, it + 2, it + 4);
+	// std::cout << "vec.insert(it, it + 4, it + 6);" << std::endl;
+	// std::cout << COLOR_YELLOW << "vector {";
+	// for (size_t i = 0; i < vec.size(); i++)
+	// {
+	// 	std::cout << vec[i];
+	// 	if (i + 1 != vec.size())
+	// 		std::cout << ", ";
+	// 	else
+	// 		std::cout << "}" << COLOR_RESET << std::endl << std::endl;
+	// }
 	it = vec.begin();
 	vec.erase(it + 2);
 	std::cout << "vec.erase(2)" << std::endl;
@@ -241,18 +241,18 @@ void	std_modifiers_vector()
 		else
 			std::cout << "}" << COLOR_RESET << std::endl << std::endl;
 	}
-	it = vec1.begin();
-	vec1.insert(it, it + 2, it + 4);
-	std::cout << "vec.insert(it, it + 4, it + 6);" << std::endl;
-	std::cout << COLOR_YELLOW << "vector {";
-	for (size_t i = 0; i < vec1.size(); i++)
-	{
-		std::cout << vec1[i];
-		if (i + 1 != vec1.size())
-			std::cout << ", ";
-		else
-			std::cout << "}" << COLOR_RESET << std::endl << std::endl;
-	}
+	// it = vec1.begin();
+	// vec1.insert(it, it + 2, it + 4);
+	// std::cout << "vec.insert(it, it + 4, it + 6);" << std::endl;
+	// std::cout << COLOR_YELLOW << "vector {";
+	// for (size_t i = 0; i < vec1.size(); i++)
+	// {
+	// 	std::cout << vec1[i];
+	// 	if (i + 1 != vec1.size())
+	// 		std::cout << ", ";
+	// 	else
+	// 		std::cout << "}" << COLOR_RESET << std::endl << std::endl;
+	// }
 
 	it = vec1.begin();
 	vec1.erase(it + 2);
