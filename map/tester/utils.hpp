@@ -1,4 +1,14 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.hpp                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/03 14:06:14 by jereligi          #+#    #+#             */
+/*   Updated: 2021/04/03 14:11:21 by jereligi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef UTILS_TESTER_HPP
 # define UTILS_TESTER_HPP
@@ -6,7 +16,7 @@
 # include <vector>
 # include <iostream>
 # include <memory>
-# include "../map/map.hpp"
+# include "../map.hpp"
 
 # define FT_TEST false
 # define STD_TEST true

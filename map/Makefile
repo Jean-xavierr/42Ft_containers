@@ -5,20 +5,20 @@
 #                                                     +:+ +:+         +:+      #
 #    By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/04/03 14:14:38 by jereligi          #+#    #+#              #
-#    Updated: 2021/04/03 14:15:34 by jereligi         ###   ########.fr        #
+#    Created: 2021/04/03 14:12:12 by jereligi          #+#    #+#              #
+#    Updated: 2021/04/03 14:13:35 by jereligi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = tester_list
+NAME = tester_map
 
-SRC = 	./tester/tester_list.cpp	
+SRC = 	./tester/tester.cpp	
 
 OBJ = $(SRC:.cpp=.o)
 
 CC = clang++
 
-CPPFLAGS = -Wall -Wextra -Werror -std=c++98
+CPPFLAGS = -Wall -Wextra -Werror
 
 all : $(NAME)
 

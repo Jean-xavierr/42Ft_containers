@@ -1,5 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tester.cpp                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/03 14:06:06 by jereligi          #+#    #+#             */
+/*   Updated: 2021/04/03 14:11:27 by jereligi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <map>
-#include "map.hpp"
+#include "../map.hpp"
 #include <vector>
 #include <iostream>
 #include "utils.hpp"
@@ -436,7 +448,7 @@ static void	test_erase_by_key(void)
 	std::cout << map_family << std::endl;
 
 	std::cout << "erase the root : map_family.erase(\"grand_mother\")" << std::endl << std::endl;
-	map_family.erase("grand_mother");
+	// map_family.erase("grand_mother");
 
 	std::cout << map_family << std::endl;
 
@@ -1561,14 +1573,14 @@ int		main(void)
 {
 	test_operator_brackets();
 	test_iterator();
-	// test_reverse_iterator();
-	// test_erase_by_key();
-	// test_erase_by_iterators();
+	test_reverse_iterator();
+	test_erase_by_key();
+	test_erase_by_iterators();
 	test_clear();
 	test_find();
 	test_insert();
-	// test_copy();
-	// test_swap();
+	test_copy();
+	test_swap();
 	test_key_compare();
 	test_value_compare();
 	test_iterator_constructor();

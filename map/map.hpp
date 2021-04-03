@@ -6,7 +6,7 @@
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 11:46:10 by jereligi          #+#    #+#             */
-/*   Updated: 2021/04/03 13:17:29 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/04/03 13:59:49 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@
 #include "./iterator/mapConstIterator.hpp"
 #include "./iterator/mapReverseIterator.hpp"
 #include "./iterator/mapConstReverseIterator.hpp"
+
+#ifndef __APPLE__
+# define __APPLE__ 0
+#endif
 
 template <typename Tpair>
 struct mapNode
@@ -472,7 +476,7 @@ namespace ft
 
 
 				}
-				else
+				else // no root
 				{
 					node_replace = node_rm->right;
 

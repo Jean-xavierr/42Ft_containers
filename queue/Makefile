@@ -5,14 +5,14 @@
 #                                                     +:+ +:+         +:+      #
 #    By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/04/03 14:14:38 by jereligi          #+#    #+#              #
-#    Updated: 2021/04/03 14:15:34 by jereligi         ###   ########.fr        #
+#    Created: 2021/04/03 14:18:27 by jereligi          #+#    #+#              #
+#    Updated: 2021/04/03 14:18:52 by jereligi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = tester_list
+NAME = tester_queue
 
-SRC = 	./tester/tester_list.cpp	
+SRC = 	tester_queue.cpp	
 
 OBJ = $(SRC:.cpp=.o)
 
