@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Jeanxavier <Jeanxavier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 11:46:10 by jereligi          #+#    #+#             */
-/*   Updated: 2021/04/02 23:12:14 by Jeanxavier       ###   ########.fr       */
+/*   Updated: 2021/04/03 13:17:29 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,16 +234,21 @@ namespace ft
 		// copy / assign
 		map& operator=(map const & x)
 		{
-			if (empty() == 0)
+			if (_size > 0)
 				clear();
 			if (x.size() > 0)
-				insert(x.begin(), x.end());
+				this->insert(x.begin(), x.end());
 			return (*this);
 		}
 		
 		// // copy	
 		map (const map& x){
-			_map = NULL;
+			_map = new node_type();
+			_map->left = NULL;
+			_map->right = NULL;
+			_map->parent = NULL;
+
+
 			_size = 0;
 			_alloc = allocator_type();
 			_key_comp = key_compare();
@@ -277,11 +282,11 @@ namespace ft
 		}
 
       	reverse_iterator rbegin() {
-			return (reverse_iterator(end()));
+			return (reverse_iterator(--end()));
 		}
 
 		const_reverse_iterator rbegin() const {
-			return (const_reverse_iterator(end()));
+			return (const_reverse_iterator(rbegin()));
 		}
 
 		reverse_iterator rend() {
@@ -420,53 +425,104 @@ namespace ft
 			else
 			{
 				// std::cout << "Two child" << std::endl;
-				node_replace = node_rm->right;
-				
-				while (node_replace->left)
-					node_replace = node_replace->left;
+				if (node_rm->parent == NULL) // root
+				{
+					node_replace = node_rm->left;
+					while (node_replace->right)
+						node_replace = node_replace->right;
 
-				if (node_replace == node_rm->right) // no under child
-				{
-					node_replace->parent = node_rm->parent;
-					node_replace->left = node_rm->left;
-					node_rm->left->parent = node_replace;
-					if (node_rm->parent)
+					if (node_replace == node_rm->left) // no under child
 					{
-						if ((*parent)->left == node_rm)
-							(*parent)->left = node_replace;
+						node_replace->parent = node_rm->parent;
+						node_replace->right = node_rm->right;
+						node_rm->right->parent = node_replace;
+						if (node_rm->parent)
+						{
+							if ((*parent)->right == node_rm)
+								(*parent)->right = node_replace;
+							else
+								(*parent)->left = node_replace;
+						}
 						else
-							(*parent)->right = node_replace;
+						{
+							_map = node_replace;
+						}
 					}
-					else
+					else // under child
 					{
-						_map = node_replace;
+						// std::cout << "Under child" << std::endl;
+						node_replace->parent->right = NULL;
+						node_replace->parent = node_rm->parent;
+						node_replace->left = node_rm->left;
+						node_replace->right = node_rm->right;
+						node_rm->right->parent = node_replace;
+						node_rm->left->parent = node_replace;
+						if (node_rm->parent)
+						{
+							if ((*parent)->left == node_rm)
+								(*parent)->left = node_replace;
+							else
+								(*parent)->right = node_replace;
+						}
+						else
+						{
+							_map = node_replace;
+						}
 					}
+
+
 				}
-				else // under child
+				else
 				{
-					// std::cout << "Under child" << std::endl;
-					node_replace->parent->left = node_replace->right;
-					node_replace->right->parent = node_replace->parent;
-					node_replace->right = node_rm->right;
-					node_replace->right->parent = node_replace;
-					node_replace->parent = node_rm->parent;
-					node_replace->left = node_rm->left;
-					node_replace->left->parent = node_replace;
-					if (node_rm->parent)
+					node_replace = node_rm->right;
+
+					while (node_replace->left)
+						node_replace = node_replace->left;
+					std::cout << "node test :" << node_replace->data.first << std::endl;
+
+					if (node_replace == node_rm->right) // no under child
 					{
-						if ((*parent)->left == node_rm)
-							(*parent)->left = node_replace;
+						node_replace->parent = node_rm->parent;
+						node_replace->left = node_rm->left;
+						node_rm->left->parent = node_replace;
+						if (node_rm->parent)
+						{
+							if ((*parent)->left == node_rm)
+								(*parent)->left = node_replace;
+							else
+								(*parent)->right = node_replace;
+						}
 						else
-							(*parent)->right = node_replace;
+						{
+							_map = node_replace;
+						}
 					}
-					else
+					else // under child
 					{
-						_map = node_replace;
+						// std::cout << "Under child" << std::endl;
+						node_replace->parent->left = node_replace->right;
+						node_replace->right->parent = node_replace->parent;
+						node_replace->right = node_rm->right;
+						node_replace->right->parent = node_replace;
+						node_replace->parent = node_rm->parent;
+						node_replace->left = node_rm->left;
+						node_replace->left->parent = node_replace;
+						if (node_rm->parent)
+						{
+							if ((*parent)->left == node_rm)
+								(*parent)->left = node_replace;
+							else
+								(*parent)->right = node_replace;
+						}
+						else
+						{
+							_map = node_replace;
+						}
 					}
 				}
 				delete node_rm;
-				_size--;
 			}
+			_size--;
 			return (1);
 		}
 
@@ -531,7 +587,7 @@ namespace ft
 		*****        Map operations            *****
 		*******************************************/
 
-		iterator find (const key_type& k) 
+		iterator find(const key_type& k) 
 		{
 			iterator 	it = begin();
 			iterator	ite = end();
@@ -697,12 +753,16 @@ namespace ft
 
 		void		_copy_data(map &src)
 		{
-			clear();
+			this->clear();
+			node_type	*tmp = _map;
 
 			_map = src._map;
 			_size = src._size;
 			_alloc = src._alloc;
 			_key_comp = src._key_comp;
+			src._map = tmp;
+			src._size = 0;
+			tmp = NULL;
 		}
 	};
 }
