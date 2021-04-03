@@ -6,7 +6,7 @@
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 16:31:36 by jereligi          #+#    #+#             */
-/*   Updated: 2021/04/03 11:47:55 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/04/03 15:43:26 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,9 +149,9 @@ namespace ft
 			pointer operator ->() {
 				return (&_map->data);
 			};									
-			const_pointer operator ->() const {
-				return (&_map->data);
-			};
+			// const_pointer operator ->() const {
+			// 	return (&_map->data);
+			// };
 
 		private:
 		
