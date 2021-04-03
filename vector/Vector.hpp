@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Jeanxavier <Jeanxavier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 12:05:06 by jereligi          #+#    #+#             */
-/*   Updated: 2021/04/03 15:15:03 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/04/03 18:49:09 by Jeanxavier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -282,13 +282,13 @@ namespace ft
 
 		iterator insert(iterator position, const value_type& val)
 		{
-			if (_size + 1 >= _capacity)
-			{
-				if (_size == 0)
-					reserve(1);
-				else
-					reserve(_capacity * 2);
-			}
+			// if (_size + 1 >= _capacity)
+			// {
+			// 	if (_size == 0)
+			// 		reserve(1);
+			// 	else
+			// 		reserve(_capacity * 2);
+			// }
 			ft::vector<T>	tmp(position, end());
 			for (size_type i = 0; i < tmp.size(); i++)
 				pop_back();
@@ -301,13 +301,13 @@ namespace ft
 
     	void insert(iterator position, size_type n, const value_type& val)
 		{
-			if (_size + n >= _capacity)
-			{
-				if (_size == 0)
-					reserve(1);
-				else
-					reserve(_capacity * 2);
-			}
+			// if (_size + n >= _capacity)
+			// {
+			// 	if (_size == 0)
+			// 		reserve(1);
+			// 	else
+			// 		reserve(_capacity * 2);
+			// }
 			ft::vector<T>	tmp(position, end());
 			for (size_type i = 0; i < tmp.size(); i++)
 				pop_back();
