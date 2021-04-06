@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tester.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Jeanxavier <Jeanxavier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 14:06:06 by jereligi          #+#    #+#             */
-/*   Updated: 2021/04/03 14:11:27 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/04/03 19:15:37 by Jeanxavier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,25 @@
 #include <vector>
 #include <iostream>
 #include "utils.hpp"
+
+#define COLOR_RESET		"\033[0m"
+#define COLOR_RED		"\033[1;31m"
+#define COLOR_BLUE		"\033[1;34m"
+#define COLOR_GREEN		"\033[1;32m"
+#define COLOR_WHITE		"\033[1;37m"
+#define COLOR_YELLOW	"\033[33m"
+#define COLOR_CYAN		"\033[1;36m"
+#define	clear_terminal "\x1B[2J\x1B[H"
+#define ft_list		COLOR_BLUE << "----- ft::map -----" << COLOR_RESET << std::endl
+
+void	next_test()
+{
+	std::string	buf;
+
+	std::cout << COLOR_GREEN << "press enter for continu..." << COLOR_RESET;
+	std::getline (std::cin, buf);
+	std::cout << clear_terminal << std::endl;
+}
 
 static void	test_operator_brackets_std(void)
 {
@@ -64,6 +83,7 @@ static void	test_operator_brackets_std(void)
 	std::cout << "int_int_map[10] : " << int_int_map[10] << std::endl;
 
 	std::cout << "int_int_map.slize() : " << int_int_map.size() << std::endl << std::endl;
+	next_test();
 }
 
 static void	test_operator_brackets(void)
@@ -173,6 +193,7 @@ static void	test_iterator_std(void)
 
 	std::cout << "int_int_map.begin() != int_int_map.end() : " << \
 	std::boolalpha << (int_int_map.begin() != int_int_map.end()) << std::endl << std::endl;
+	next_test();
 }
 
 static void	test_iterator(void)
@@ -281,6 +302,7 @@ static void	test_reverse_iterator_std(void)
 
 	std::cout << "int_int_map.rbegin() != int_int_map.rend() : " << \
 	std::boolalpha << (int_int_map.rbegin() != int_int_map.rend()) << std::endl;
+	next_test();
 }
 
 static void	test_reverse_iterator(void)
@@ -367,15 +389,11 @@ static void	test_erase_by_key_std(void)
 
 	std::cout << map_family << std::endl;
 
-	std::cout << "erase a two leaf branch : map_family.erase(\"uncle\")" << std::endl << std::endl;
-	map_family.erase("uncle");
-
-	std::cout << map_family << std::endl;
-
 	std::cout << "erase the root : map_family.erase(\"grand_mother\")" << std::endl << std::endl;
 	map_family.erase("grand_mother");
 
 	std::cout << map_family << std::endl;
+	next_test();
 
 }
 
@@ -442,13 +460,8 @@ static void	test_erase_by_key(void)
 
 	std::cout << map_family << std::endl;
 
-	// std::cout << "erase a two leaf branch : map_family.erase(\"uncle\")" << std::endl << std::endl;
-	// map_family.erase("uncle");
-
-	std::cout << map_family << std::endl;
-
 	std::cout << "erase the root : map_family.erase(\"grand_mother\")" << std::endl << std::endl;
-	// map_family.erase("grand_mother");
+	map_family.erase("grand_mother");
 
 	std::cout << map_family << std::endl;
 
@@ -549,6 +562,7 @@ static void	test_erase_by_iterators_std(void)
 	std::cout << "affirmation.erase(it_aff);" << std::endl << std::endl;
 
 	std::cout << "affirmation : " << std::endl << affirmation << std::endl << std::endl;
+	next_test();
 }
 
 static void	test_erase_by_iterators(void)
@@ -670,7 +684,7 @@ static void	test_clear_std(void)
 
 	std::cout << "Now world_records_apnea : " << std::endl << world_records_apnea << std::endl;
 	std::cout << "world_records_apnea.size() : " << std::endl << world_records_apnea.size() << std::endl << std::endl;
-
+	next_test();
 }
 
 static void	test_clear(void)
@@ -726,6 +740,7 @@ static void	test_find_std(void)
 	std::cout << "std::map<int, int>::const_iterator it_found = random_tree.find(59);" << std::endl << std::endl;
 
 	std::cout << "*it_found : " << *it_found << std::endl << std::endl;
+	next_test();
 }
 
 static void	test_find(void)
@@ -839,7 +854,7 @@ static void	test_insert_std(void)
 	int_int_map.insert(int_int_map_two.begin(), int_int_map_two.end());
 
 	std::cout << "int_int_map : " << std::endl << int_int_map << std::endl;
-
+	next_test();
 }
 
 static void	test_insert(void)
@@ -972,7 +987,7 @@ static void	test_copy_std(void)
 	std::cout << "cpy_hand_france = artists_world;" << std::endl << std::endl;
 
 	std::cout << "map cpy_hand_france : " << std::endl << cpy_hand_france << std::endl;
-
+	next_test();
 }
 
 static void	test_copy(void)
@@ -1064,6 +1079,7 @@ void 	test_swap_std(void)
 
 	std::cout << "banana_box :" << std::endl << banana_box << std::endl;
 	std::cout << "apple_box :" << std::endl << apple_box << std::endl << std::endl;
+	next_test();
 }
 
 void 	test_swap(void)
@@ -1147,6 +1163,7 @@ static void	test_key_compare_std(void)
 		std::cout << it->first << " => " << it->second << std::endl;
 		it++;
 	}
+	next_test();
 }
 
 static void	test_key_compare(void)
@@ -1231,6 +1248,7 @@ static void	test_value_compare_std(void)
 	}
 
 	std::cout << std::endl;
+	next_test();
 }
 
 static void	test_value_compare(void)
@@ -1297,6 +1315,7 @@ static void	test_iterator_constructor_std(void)
 	std::cout << "std::map<std::string, std::string> cpy_map_countries(map_countries.begin(), map_countries.end());" << std::endl;
 
 	std::cout << "cpy_map_countries :" << std::endl << cpy_map_countries << std::endl;
+	next_test();
 }
 
 static void	test_iterator_constructor(void)
@@ -1382,7 +1401,7 @@ static void	test_operations_std(void)
 	std::cout << "*(ret_const.second) : " << *(ret_const.second) << std::endl << std::endl;
 
 	std::cout << std::endl;
-
+	next_test();
 }
 
 static void	test_operations(void)
@@ -1520,6 +1539,7 @@ static void	test_other_compare_std(void)
 	another_map["Radiographie"] = "Radiographie";
 
 	std::cout << "another_map : " << std::endl << another_map << std::endl;
+	next_test();
 }
 
 static void	test_other_compare(void)
