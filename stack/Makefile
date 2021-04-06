@@ -6,7 +6,7 @@
 #    By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/03 14:19:37 by jereligi          #+#    #+#              #
-#    Updated: 2021/04/03 14:19:44 by jereligi         ###   ########.fr        #
+#    Updated: 2021/04/06 11:35:40 by jereligi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,9 @@ all : $(NAME)
 
 $(NAME) :	$(OBJ)
 			$(CC) $(CFLAGS) -o $(NAME) $(OBJ)
+
+sanitize : 	$(OBJ)
+			$(CC) -o $(NAME) -fsanitize=address $(CPPFLAGS) $(OBJ)
 
 clean :
 			rm -rf $(OBJ)

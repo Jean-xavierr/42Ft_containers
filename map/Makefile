@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: Jeanxavier <Jeanxavier@student.42.fr>      +#+  +:+       +#+         #
+#    By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/03 14:12:12 by jereligi          #+#    #+#              #
-#    Updated: 2021/04/03 19:10:28 by Jeanxavier       ###   ########.fr        #
+#    Updated: 2021/04/06 11:35:17 by jereligi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,9 @@ all : $(NAME)
 
 $(NAME) :	$(OBJ)
 			$(CC) $(CFLAGS) -o $(NAME) $(OBJ)
+
+sanitize : 	$(OBJ)
+			$(CC) -o $(NAME) -fsanitize=address $(CPPFLAGS) $(OBJ)
 
 clean :
 			rm -rf $(OBJ)
