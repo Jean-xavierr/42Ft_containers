@@ -6,7 +6,7 @@
 /*   By: jereligi <jereligi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 11:46:10 by jereligi          #+#    #+#             */
-/*   Updated: 2021/04/03 15:42:32 by jereligi         ###   ########.fr       */
+/*   Updated: 2021/04/06 12:05:53 by jereligi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,7 +199,7 @@ namespace ft
 		typedef mapReverseIterator<value_type, node_type>		reverse_iterator;
 		typedef mapConstReverseIterator<value_type, node_type>	const_reverse_iterator;
 		typedef size_t											size_type;
-		typedef ptrdiff_t										difference_type;
+		typedef std::ptrdiff_t									difference_type;
 
 
 		/*******************************************
